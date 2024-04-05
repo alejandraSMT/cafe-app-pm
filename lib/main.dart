@@ -59,9 +59,7 @@ class _AppViewState extends State<AppView> {
         page = MapView();
         break;
       case 2:
-        page = const Center(
-          child: Text("PROFILE"),
-        );
+        page = Profile();
 
       default:
         throw UnimplementedError("no widget for $currentPage");
@@ -83,6 +81,70 @@ class _AppViewState extends State<AppView> {
         ],
       ),
     );
+  }
+}
+
+class Profile extends StatefulWidget {
+  const Profile({
+    super.key,
+  });
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  var options = {
+    "Configuration": Icons.accessibility,
+    "My orders": Icons.shopping_bag,
+    "My cards": Icons.payment,
+    "Log out" : Icons.logout
+  }.entries.toList(); 
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ListView(
+            children: [Column(
+              children: [
+                Container(
+                  child: Text(
+                    "Profile",
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
+                      fontWeight: FontWeight.bold
+                    ),
+                    ),
+                ),
+                for(var option in options)
+                  ListTile(
+                    leading: Icon(
+                      option.value,
+                      color: Colors.grey,
+                    ),
+                    title: Text(
+                      option.key,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                        color: Colors.black
+                      ),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_right,
+                        color: Colors.grey,
+                      ),
+                      onTap: (){
+                        print("CLICKEO EN OPCION");
+                      },
+                  )
+              ],
+            )],
+          ),
+        ),
+      );
   }
 }
 
@@ -124,6 +186,7 @@ class _MapViewState extends State<MapView> {
         zoomControlsEnabled: true,
         compassEnabled: true,
         myLocationButtonEnabled: true,
+        myLocationEnabled: true,
       ),
     )
     );
