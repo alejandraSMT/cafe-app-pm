@@ -175,18 +175,17 @@ class ProductCard extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 constraints: BoxConstraints(
-                  maxHeight: 100,
-                  maxWidth: 100
+                  maxHeight: 80
                 ),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration: BoxDecoration(shape: BoxShape.rectangle),
+                decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Image.network(
-                popular[index].image,
-                fit: BoxFit.cover,
+                  popular[index].image,
+                  fit: BoxFit.cover,
               ),
               ),
               Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
@@ -282,13 +281,12 @@ class HomeHeader extends StatelessWidget {
           flex: 1,
         ),
         RawMaterialButton(
+          padding: EdgeInsets.all(5),
           onPressed: () {},
-          fillColor: Colors.white70,
           shape: const CircleBorder(),
           elevation: 2,
           child: const Icon(
-            Icons.person,
-            color: Colors.grey,
+            Icons.shopping_cart
           ),
         ),
       ],

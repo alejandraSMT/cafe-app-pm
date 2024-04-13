@@ -12,6 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'presentation/HomePage.dart';
 import 'presentation/MapView.dart';
 import 'presentation/Profile.dart';
+import 'package:cafe_app/presentation/SignUp.dart';
 //import 'package:device_preview/device_preview.dart';
 
 void main() {
