@@ -28,26 +28,23 @@ class _ProfileState extends State<Profile> {
     };
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "My Profile",
+          style: TextStyle(
+              fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(0),
         child: ListView(
           children: [
             Column(
               children: [
-                Stack(children: [
-                  Container(
-                    constraints: BoxConstraints(maxHeight: 150),
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.8)),
-                  ),
-                  _profileHeader()
-                ]),
-                /*Text("Profile",
-                    style: TextStyle(
-                        fontSize:
-                            Theme.of(context).textTheme.displaySmall!.fontSize,
-                        fontWeight: FontWeight.bold)),*/
-                //_profileHeader(),
+                _profileHeader(),
                 ...options.entries.map<Widget>((option) {
                   var index = options.keys
                       .toList()
@@ -56,9 +53,8 @@ class _ProfileState extends State<Profile> {
                   return Column(
                     children: [
                       if (index == length - 1)
-                        Column(children: [
-                          Divider(color: Colors.grey, height: 1)
-                        ]),
+                        Column(
+                            children: [Divider(color: Colors.grey, height: 1)]),
                       ListTile(
                         leading: Icon(
                           option.value,
@@ -98,37 +94,31 @@ class _profileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Center(
-        child: Container(
-          constraints:
-              BoxConstraints(minHeight: 180, maxHeight: 200, maxWidth: 250),
-          child: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(shape: BoxShape.circle),
-                constraints:
-                    const BoxConstraints(maxWidth: 120, minHeight: 120),
-                child: Image.network(
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZrU-vpqXy8lk55H4d9_4bvh9Su7DfvBdyLegwZsLkcQ&s",
-                  fit: BoxFit.fill,
-                ),
+    return Container(
+        constraints:
+            BoxConstraints(minHeight: 180, maxHeight: 200, maxWidth: 250),
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              constraints: const BoxConstraints(maxWidth: 120, minHeight: 120),
+              child: Image.network(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZrU-vpqXy8lk55H4d9_4bvh9Su7DfvBdyLegwZsLkcQ&s",
+                fit: BoxFit.fill,
               ),
-              Text(
-                  "Nombre",
-                  style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                      fontWeight: FontWeight.bold),
-                ),
-            ],
-          )),
-        ),
-      ),
-    );
+            ),
+            Text(
+              "Nombre",
+              style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        )),
+      );
   }
 }

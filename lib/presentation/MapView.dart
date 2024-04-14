@@ -29,7 +29,7 @@ class _MapViewState extends State<MapView> {
           title: Text(
             "Locales",
             style: TextStyle(
-                fontSize: Theme.of(context).textTheme.headlineLarge!.fontSize,
+                fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
                 color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.bold),
           ),
@@ -39,22 +39,30 @@ class _MapViewState extends State<MapView> {
             return Center(
               child: Column(
                 children: [
-                  Container(
-                    constraints: BoxConstraints(maxHeight: 400),
-                    child: GoogleMap(
-                      onMapCreated: (GoogleMapController controller) {
-                        if(!googleMapController.isCompleted){
-                          googleMapController.complete(controller);
-                        }
-                      },
-                      initialCameraPosition: const CameraPosition(
-                          target: LatLng(37.42796133580664, -122.085749655962),
-                          zoom: 15.0),
-                      mapType: MapType.normal,
-                      zoomControlsEnabled: true,
-                      compassEnabled: true,
-                      myLocationButtonEnabled: true,
-                      myLocationEnabled: true,
+                  Card(
+                    margin: EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: Container(
+                      constraints: BoxConstraints(maxHeight: 400),
+                      child: GoogleMap(
+                        onMapCreated: (GoogleMapController controller) {
+                          if (!googleMapController.isCompleted) {
+                            googleMapController.complete(controller);
+                          }
+                        },
+                        initialCameraPosition: const CameraPosition(
+                            target:
+                                LatLng(37.42796133580664, -122.085749655962),
+                            zoom: 15.0),
+                        mapType: MapType.normal,
+                        zoomControlsEnabled: true,
+                        compassEnabled: true,
+                        myLocationButtonEnabled: true,
+                        myLocationEnabled: true,
+                      ),
                     ),
                   )
                 ],
@@ -64,22 +72,30 @@ class _MapViewState extends State<MapView> {
             return Center(
               child: Row(
                 children: [
-                  Container(
-                    constraints: BoxConstraints(maxWidth: 400),
-                    child: GoogleMap(
-                      onMapCreated: (GoogleMapController controller) {
-                        if(!googleMapController.isCompleted){
-                          googleMapController.complete(controller);
-                        }
-                      },
-                      initialCameraPosition: const CameraPosition(
-                          target: LatLng(37.42796133580664, -122.085749655962),
-                          zoom: 15.0),
-                      mapType: MapType.normal,
-                      zoomControlsEnabled: true,
-                      compassEnabled: true,
-                      myLocationButtonEnabled: true,
-                      myLocationEnabled: true,
+                  Card(
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: Container(
+                      constraints: BoxConstraints(maxWidth: 400),
+                      child: GoogleMap(
+                        onMapCreated: (GoogleMapController controller) {
+                          if (!googleMapController.isCompleted) {
+                            googleMapController.complete(controller);
+                          }
+                        },
+                        initialCameraPosition: const CameraPosition(
+                            target:
+                                LatLng(37.42796133580664, -122.085749655962),
+                            zoom: 15.0),
+                        mapType: MapType.normal,
+                        zoomControlsEnabled: true,
+                        compassEnabled: true,
+                        myLocationButtonEnabled: true,
+                        myLocationEnabled: true,
+                      ),
                     ),
                   )
                 ],

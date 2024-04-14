@@ -6,37 +6,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class SignUp extends StatelessWidget {
-  const SignUp({
+class Login extends StatelessWidget {
+  const Login({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 40),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Stack(
-            children: [
-              Center(
-                child: Image.asset(
-                  'assets/images/coffee_login.png',
-                  height: 150,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Stack(
+              children: [
+                Center(
+                  child: Image.asset(
+                    'assets/images/coffee_login.png',
+                    height: 150,
+                  ),
                 ),
-              ),
-            _signUpCard()
-            ],
-          )
-        ],
+              _loginCard()
+              ],
+            )
+          ],
+        ),
       ),
+      ]
     );
   }
 }
 
-class _signUpCard extends StatelessWidget {
-  const _signUpCard({
+class _loginCard extends StatelessWidget {
+  const _loginCard({
     super.key,
   });
 
@@ -56,31 +60,20 @@ class _signUpCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Sign Up",
+                "Login",
                 style: TextStyle(
                   fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
                   fontWeight: FontWeight.bold
                 ),
                 ),
                 Text(
-                "Create your account",
+                "Welcome back!",
                 style: TextStyle(
                   fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                   color: Colors.grey
                 ),
                 ),
                 Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-              TextField(
-                decoration: InputDecoration(
-                  isDense: true,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(25))
-                  ),
-                  hintText: 'Enter name',
-                  prefixIcon: Icon(Icons.person)
-                ),
-              ),
               SizedBox(height: 10,),
               TextField(
                 decoration: InputDecoration(
@@ -103,16 +96,37 @@ class _signUpCard extends StatelessWidget {
                   prefixIcon: Icon(Icons.lock)
                 ),
               ),
-              SizedBox(height: 10,),
-              TextField(
-                decoration: InputDecoration(
-                  isDense: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25))
+              SizedBox(height: 2),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: false, 
+                        onChanged: (value){
+          
+                        },
+                        ),
+                      Text(
+                        "Remember me",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: Theme.of(context).textTheme.labelMedium!.fontSize
+                        ),
+                      ),
+                    ],
                   ),
-                  hintText: 'Confirm password',
-                  prefixIcon: Icon(Icons.lock)
-                ),
+                  Text(
+                    "Forgot password?",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: Theme.of(context).textTheme.labelMedium!.fontSize
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 15),
               ElevatedButton(
@@ -135,10 +149,10 @@ class _signUpCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already have an account?"),
+                    Text("Don't have an account?"),
                     TextButton(
                         onPressed: () {},
-                        child: Text("Login", style: TextStyle(color: Theme.of(context).primaryColor),)
+                        child: Text("Sign up", style: TextStyle(color: Theme.of(context).primaryColor),)
                     )
                   ],
                 )
