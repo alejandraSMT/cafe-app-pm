@@ -6,6 +6,7 @@ import 'package:cafe_app/Product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,21 +27,21 @@ class _HomePageState extends State<HomePage> {
     const data = [
       {
         "name": "Honey almondmilk cold brew brew brew brew brew brew",
-        "price": "s/14.25",
+        "price": "14.25",
         "description": "Cold brew lightly sweetenet",
         "image":
             "https://londonschoolofcoffee.com/cdn/shop/products/LSC_Product_Pic_600_x_469_9_1_600x490.png?v=1582562355"
       },
       {
         "name": "Honey almondmilk cold brew",
-        "price": "s/14.25",
+        "price": "14.25",
         "description": "Cold brew lightly sweetenet",
         "image":
             "https://londonschoolofcoffee.com/cdn/shop/products/LSC_Product_Pic_600_x_469_9_1_600x490.png?v=1582562355"
       },
       {
         "name": "Honey almondmilk cold brew",
-        "price": "s/14.25",
+        "price": "14.25",
         "description": "Cold brew lightly sweetenet",
         "image":
             "https://londonschoolofcoffee.com/cdn/shop/products/LSC_Product_Pic_600_x_469_9_1_600x490.png?v=1582562355"
@@ -55,46 +56,39 @@ class _HomePageState extends State<HomePage> {
     var style = theme.textTheme.headlineSmall!.copyWith(
         color: theme.colorScheme.primary, fontWeight: FontWeight.bold);
 
-    var categories = ["Hot Coffee", "Iced Coffee", "Chocolate", "Signature"];
+    var categories =
+        ["Hot Coffee", "Iced Coffee", "Chocolate", "Signature"].toList();
 
     var selected = 0;
     var colorCard = Colors.white70;
 
     return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverToBoxAdapter(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HomeHeader(style: style),
-                    const Text(
-                      "Categories",
-                      textAlign: TextAlign.left,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 5))
-                  ]),
-            ),
-            SliverGrid(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 320.0,
-                mainAxisSpacing: 5.0,
-                crossAxisSpacing: 5.0,
-                childAspectRatio: 3.0,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HomeHeader(style: style),
+                const Text(
+                  "Categories",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                ),
+                Padding(padding: EdgeInsets.symmetric(vertical: 5))
+              ]),
+          Container(
+            constraints: BoxConstraints(maxHeight: 60),
+            child: ListView.separated(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selected = index;
-                      });
-                      print("CLICKEO $selected");
-                    },
+                    onTap: () {},
                     child: Card(
                       color: selected == index
                           ? Theme.of(context).primaryColor
@@ -105,49 +99,62 @@ class _HomePageState extends State<HomePage> {
                       shadowColor: Colors.transparent,
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              constraints:
-                                  BoxConstraints.expand(height: 45, width: 40),
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(100)),
-                              child: const Icon(
-                                Icons.coffee,
-                                size: 20,
+                        child: Container(
+                          constraints: BoxConstraints(minWidth: 100, maxWidth: 150),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                constraints:
+                                    BoxConstraints.expand(height: 45, width: 40),
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100)),
+                                child: const Icon(
+                                  Icons.coffee,
+                                  size: 20,
+                                ),
                               ),
-                            ),
-                            Padding(padding: EdgeInsets.all(5)),
-                            Text(categories[index])
-                          ],
+                              Padding(padding: EdgeInsets.all(5)),
+                              Text(categories[index])
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   );
                 },
-                childCount: categories.length,
-              ),
-            ),
-            const SliverToBoxAdapter(
-              child: Padding(
+                separatorBuilder: (context, index) => Divider(),
+                itemCount: categories.length),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: Text(
-                  "Popular drinks",
+                  "Here category name!",
                   textAlign: TextAlign.left,
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
                 ),
               ),
-            ),
-            SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    (context, index) =>
-                        ProductCard(popular: popular, index: index),
-                    childCount: popular.length))
-          ],
-        ));
+            ],
+          ),
+          Expanded(
+            child: ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return ProductCard(popular: popular, index: index);
+                },
+                separatorBuilder: (context, index) => Divider(thickness: 0,color: Colors.transparent,),
+                itemCount: popular.length
+              ),
+          )
+        ],
+      ),
+    );
   }
 }
 
@@ -167,7 +174,6 @@ class ProductCard extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: 100),
       child: Card(
         elevation: null,
-        surfaceTintColor: Colors.white,
         shadowColor: Colors.transparent,
         color: Colors.white,
         child: Padding(
@@ -178,15 +184,14 @@ class ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                constraints: BoxConstraints(
-                  maxHeight: 80
-                ),
+                constraints: BoxConstraints(maxHeight: 80),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(15))),
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Image.network(
                   popular[index].image,
                   fit: BoxFit.cover,
-              ),
+                ),
               ),
               Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
               Column(
@@ -224,7 +229,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          "${popular[index].price}",
+                          "s/ ${popular[index].price}",
                           style: TextStyle(
                               fontSize: Theme.of(context)
                                   .textTheme
@@ -274,7 +279,7 @@ class HomeHeader extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "Hola Alejandra",
+          "Hello Alejandra",
           style: style,
         ),
         const Spacer(
@@ -282,12 +287,12 @@ class HomeHeader extends StatelessWidget {
         ),
         RawMaterialButton(
           padding: EdgeInsets.all(5),
-          onPressed: () {},
+          onPressed: () {
+            context.goNamed("shoppingCart");
+          },
           shape: const CircleBorder(),
           elevation: 2,
-          child: const Icon(
-            Icons.shopping_cart
-          ),
+          child: const Icon(Icons.shopping_cart),
         ),
       ],
     );

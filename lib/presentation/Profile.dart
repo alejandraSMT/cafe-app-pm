@@ -21,7 +21,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     const options = {
-      "Configuration": Icons.accessibility,
+      "Profile settings": Icons.settings,
       "My orders": Icons.shopping_bag,
       "My cards": Icons.payment,
       "Log out": Icons.logout

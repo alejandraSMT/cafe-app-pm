@@ -4,10 +4,12 @@ import 'dart:convert';
 
 import 'package:cafe_app/Product.dart';
 import 'package:cafe_app/presentation/Login.dart';
+import 'package:cafe_app/presentation/ShoppingCart.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'presentation/HomePage.dart';
@@ -20,6 +22,40 @@ void main() {
   runApp(const MainApp());
 }
 
+final _router = GoRouter(
+      initialLocation: '/login',
+      routes: [
+        GoRoute(
+          name: 'main',
+          path: '/',
+          builder: (context, state) => const Scaffold(
+            body: AppView(),
+          ),
+        ),
+        GoRoute(
+          name: 'login',
+          path: '/login',
+          builder: (context, state) => const Scaffold(
+            body: Login(),
+          ),
+        ),
+        GoRoute(
+          name: 'signUp',
+          path: '/signUp',
+          builder: (context, state) => const Scaffold(
+            body: SignUp(),
+          ),
+        ),
+        GoRoute(
+          name: 'shoppingCart',
+          path: '/shoppingCart',
+          builder: (context, state) => const Scaffold(
+            body: ShoppingCart(),
+          ),
+        ),
+      ],
+    );
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -29,12 +65,16 @@ class MainApp extends StatelessWidget {
       colorSchemeSeed: Color.fromARGB(255, 177, 127, 77),
     );
 
-    return MaterialApp(
+    return MaterialApp.router(
+      theme: appTheme,
+      routerConfig: _router,
+    );
+    /*return MaterialApp(
       theme: appTheme,
       home: const Scaffold(
         body: AppView(),
       ),
-    );
+    );*/
   }
 }
 
