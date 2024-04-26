@@ -2,7 +2,8 @@
 ---
   - [Introducción](#introducción).
   - [Flutter](#flutter)
-  - [PostreSQL](#postresql)
+  - [PostgreSQL](#postgresql)
+  - [Diagrama de base de datos](#diagrama-de-base-de-datos)
   - [Diagrama de Despliegue](#diagrama-de-despliegue)
   - [Requerimientos no Funcionales](#requerimientos-no-funcionales)
   - [Diagrama de Casos de Uso](#diagrama-de-casos-de-uso)
@@ -20,8 +21,12 @@ Para el desarrollo de esta aplicación móvil instalamos Visual Studio Code como
 Para el frontend, instalamos adicionalmente las extensiones de Flutter y Dart, las cuales nos permitirán escribir y depurar el código de manera más eficiente. La extensión de Flutter proporciona herramientas para crear, editar y depurar aplicaciones. La extensión de Dart ofrece soporte para el lenguaje de programación Dart, utilizado en el desarrollo de aplicaciones en Flutter. Luego, tuvimos que instalar el SDK al no tenerlo descargado previamente, el cual incluye herramientas y bibliotecas a usarse en Flutter. Lo descargamos del sitio oficial de Flutter y seguimos las instrucciones de instalación. Posteriormente, configuramos la ruta del SDK de Flutter en Visual Studio Code para que pudiéramos acceder a él. Finalmente, para poder visualizar y probar la aplicación en un entorno simulado de un dispositivo Android instalamos el Android Studio desde el sitio web oficial. Esta herramienta proporciona un emulador de Android que se puede integrar con Visual Studio Code para ejecutar y depurar aplicaciones. 
 
 ---
-## PostreSQL
+## PostgreSQL
 Para el backend, decidimos implementar pgAdmin para administrar las operaciones de datos de la aplicación. En primer lugar, antes de iniciar la descarga, verificamos los requisitos del sistema en la página oficial de pgAdmin para asegurarnos de que nuestras laptops cumplieran con las especificaciones necesarias. Una vez confirmado esto, procedimos a la página de descargas de pgAdmin, donde seleccionamos el instalador para Windows. Optamos por la versión más reciente, pgAdmin 4, y descargamos el archivo instalador adecuado para la arquitectura de 64 bits de nuestro sistema. Luego, ejecutamos el instalador descargado y nos mostró el cuadro de diálogo de instalación. El asistente de instalación nos guió a través de varios pasos, incluyendo la aceptación de licencias, la selección de ubicación de instalación y la configuración de componentes adicionales. Una vez completada la instalación, lanzamos pgAdmin desde el menú de inicio y establecimos una contraseña maestra para proteger las credenciales de las bases de datos almacenadas. Después, nos conectamos al servidor de base de datos predeterminado de PostgreSQL que ya estaba configurado en el sistema y creamos una nueva base de datos llamada "CafeteriaDB" destinada a manejar todas las operaciones relacionadas con la cafetería. Por último, realizamos pruebas para asegurarnos de que la conexión a la base de datos fuera estable, ejecutando consultas SQL básicas para verificar la conectividad como un SELECT.
+
+---
+## Diagrama de base de datos
+![CafeteriaBackend](markdown_resources/CafeteriaBackend.png)
 
 ---
 ## Diagrama de Despliegue
@@ -51,31 +56,25 @@ Para el backend, decidimos implementar pgAdmin para administrar las operaciones 
 | Concepto|Descripción|
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Identificación de requerimiento | RNF04|
-| Características|La aplicación debe estar disponible durante todo momento para los usuarios, con tiempos de inactividad mínimos para mantenimiento o actualizaciones.|
+| Características|La aplicación debe estar disponible durante todo momento para los usuarios, con tiempos de inactividad mínimos para mantenimiento o actualizaciones, también debe poder manejar un gran número de usuario simultáneos sin que afecte significativamente al rendimiento|
 | Nombre del requerimiento |Disponibilidad|
 
 | Concepto|Descripción|
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Identificación de requerimiento | RNF05|
-| Características|La aplicación debe poder manejar un gran número de usuarios simultáneos sin que afecte significativamente al rendimiento.|
-| Nombre del requerimiento |Cantidad de usuario|
-
-| Concepto|Descripción|
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Identificación de requerimiento | RNF06|
 | Características|La aplicación debe ser rápida y eficiente, con tiempos de carga rápidos y una respuesta fluida a las interacciones del usuario.|
 | Nombre del requerimiento |Rendimiento|
 
 
 | Concepto|Descripción|
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Identificación de requerimiento | RNF07|
+| Identificación de requerimiento | RNF06|
 | Características|La aplicación debe ser fácil de usar, con una interfaz intuitiva y bien diseñada que permita a los usuarios navegar y realizar pedidos de manera sencilla y rápida.|
 | Nombre del requerimiento |Usabilidad|
 
 | Concepto|Descripción|
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Identificación de requerimiento | RNF08|
+| Identificación de requerimiento | RNF07|
 | Características|La aplicación debe cumplir con las regulaciones y leyes locales en relación a ventas de productos alimenticios y seguir normativas de pagos en línea, principalmente que salvaguarde la seguridad de los pagos de los usuarios. Además, de incluir términos y condiciones que aborden políticas de privacidad y términos de servicio.|
 | Nombre del requerimiento |Normativas legales|
 ---
