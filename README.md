@@ -11,7 +11,7 @@
 
 ---
 ## Introducción
-Para la aplicación, se usó Flatter para el desarrollo propio de la aplicación, con el objetivo de que se pueda usar tanto en dispositivos móviles Android y iOs. Por el lado del backed, este se desarrolló en NodeJs Express y la base de datos en PostgreSQL.
+Para la aplicación, se usó Flutter para el desarrollo propio de la aplicación, con el objetivo de que se pueda usar tanto en dispositivos móviles Android y iOS. Por el lado del backed, este se desarrolló en NodeJs Express y la base de datos en PostgreSQL.
 
 ---
 ## Flutter
