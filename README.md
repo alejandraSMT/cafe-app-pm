@@ -25,7 +25,7 @@ Para el backend, decidimos implementar pgAdmin para administrar las operaciones 
 
 ---
 ## Diagrama de Despliegue
-![diagrama_despliegue](markdown_resources/diagrama_despliegue.png)
+![diagrama_despliegue](markdown_resources/diagrama_despliegue.PNG)
 
 ---
 ## Requerimientos no Funcionales
