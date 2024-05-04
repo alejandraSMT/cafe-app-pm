@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cafe_app/Product.dart';
+import 'package:cafe_app/models/Product.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +52,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
   @override
   void initState() {
     popular.forEach((element) {
-      totalAmount = totalAmount + double.parse(element.price);
+      totalAmount = totalAmount + double.parse(element.price!);
     });
     super.initState();
   }
@@ -72,7 +72,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
         ),
         ),
         title: Text(
-          "Shopping cart",
+          "My cart",
           style: TextStyle(
               fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
               color: Theme.of(context).primaryColor,
@@ -165,23 +165,24 @@ class ProductShopping extends StatelessWidget {
     return Container(
       constraints: BoxConstraints(maxWidth: 100),
       child: Card(
+        surfaceTintColor: Colors.transparent,
         elevation: null,
         shadowColor: Colors.transparent,
-        color: Colors.white,
+        color: Colors.transparent,
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(5.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                constraints: BoxConstraints(maxHeight: 80),
+                constraints: BoxConstraints(maxHeight: 100),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Image.network(
-                  popular[index].image,
+                  popular[index].image!,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -198,7 +199,8 @@ class ProductShopping extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           fontSize:
                               Theme.of(context).textTheme.bodyLarge!.fontSize),
-                      overflow: TextOverflow.visible,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
                   ),
                   Container(

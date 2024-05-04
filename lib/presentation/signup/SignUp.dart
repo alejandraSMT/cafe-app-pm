@@ -96,6 +96,7 @@ class _signUpCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  obscureText: true,
                   decoration: InputDecoration(
                     isDense: true,
                     border: OutlineInputBorder(
@@ -107,6 +108,7 @@ class _signUpCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  obscureText: true,
                   decoration: InputDecoration(
                     isDense: true,
                     border: OutlineInputBorder(

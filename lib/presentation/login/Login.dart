@@ -102,6 +102,7 @@ class _loginForm extends StatelessWidget {
                   height: 10,
                 ),
                 TextField(
+                  obscureText: true,
                   controller: controller.passController,
                   decoration: InputDecoration(
                       isDense: true,

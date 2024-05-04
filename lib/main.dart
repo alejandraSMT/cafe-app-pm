@@ -2,9 +2,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cafe_app/Product.dart';
+import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/presentation/detail_product/DetailProduct.dart';
 import 'package:cafe_app/presentation/login/Login.dart';
-import 'package:cafe_app/presentation/ShoppingCart.dart';
+import 'package:cafe_app/presentation/cart/ShoppingCart.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,10 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'presentation/HomePage.dart';
-import 'presentation/MapView.dart';
-import 'presentation/Profile.dart';
-import 'package:cafe_app/presentation/SignUp.dart';
+import 'presentation/home/HomePage.dart';
+import 'presentation/map/MapView.dart';
+import 'presentation/profile/Profile.dart';
+import 'package:cafe_app/presentation/signup/SignUp.dart';
 //import 'package:device_preview/device_preview.dart';
 
 void main() {
@@ -53,6 +54,13 @@ final _router = GoRouter(
             body: ShoppingCart(),
           ),
         ),
+        GoRoute(
+          name: 'detailProduct',
+          path: '/detailProduct/:id',
+          builder: (context, state) => Scaffold(
+            body: DetailProduct(index: state.pathParameters["id"]!,),
+          ),
+        )
       ],
     );
 
