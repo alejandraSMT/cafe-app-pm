@@ -104,7 +104,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                         Text(
                           "Total",
                           style: TextStyle(
-                            fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
+                            fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                             fontWeight: FontWeight.bold
                           ),
                           ),
@@ -124,7 +124,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
                         style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor)
                         ),
-                        onPressed: (){}, 
+                        onPressed: (){
+                          context.goNamed("orderDetail");
+                        }, 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

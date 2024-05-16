@@ -255,7 +255,7 @@ class HomeHeader extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "Hello Alejandra",
+          "Hello, Alejandra!",
           style: style,
         ),
         const Spacer(

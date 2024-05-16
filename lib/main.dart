@@ -3,9 +3,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/presentation/add-card/AddCard.dart';
 import 'package:cafe_app/presentation/detail_product/DetailProduct.dart';
 import 'package:cafe_app/presentation/login/Login.dart';
 import 'package:cafe_app/presentation/cart/ShoppingCart.dart';
+import 'package:cafe_app/presentation/order-detail/OrderDetail.dart';
+import 'package:cafe_app/presentation/select-payment/SelectPayment.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +62,27 @@ final _router = GoRouter(
           path: '/detailProduct/:id',
           builder: (context, state) => Scaffold(
             body: DetailProduct(index: state.pathParameters["id"]!,),
+          ),
+        ),
+        GoRoute(
+          name: 'orderDetail',
+          path: '/orderDetail',
+          builder: (context, state) => Scaffold(
+            body: OrderDetail(),
+          ),
+        ),
+        GoRoute(
+          name: 'selectPayment',
+          path: '/selectPayment',
+          builder: (context, state) => Scaffold(
+            body: SelectPayment(),
+          ),
+        ),
+        GoRoute(
+          name: 'addCard',
+          path: '/addCard',
+          builder: (context, state) => Scaffold(
+            body: AddCard(),
           ),
         )
       ],

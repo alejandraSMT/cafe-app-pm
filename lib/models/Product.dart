@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cafe_app/models/Ingredient.dart';
 import 'package:cafe_app/models/SizeCup.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,20 +11,22 @@ class Product{
   String? price;
   List<Ingredient>? ingredients;
   List<SizeCup>? sizes;
+  String? cant;
 
   Product({
     required this.name,
-    required this.description,
-    required this.image,
+    this.description,
+    this.image,
     required this.price,
     this.ingredients,
-    this.sizes
+    this.sizes,
+    this.cant
   });
 
   Product.fromJson(Map<String,dynamic> json){
     name=json['name'];
-    description=json['description']; 
-    image=json['image'];
+    description=json['description']!=null ? json['description'] :  null; 
+    image=json['image']!=null ? json['image'] : null;
     price=json['price'];
     if(json['ingredients'] != null){
       ingredients = <Ingredient>[];
@@ -36,6 +40,7 @@ class Product{
         sizes!.add(SizeCup.fromJson(element));
        });
     }
+    cant = json['cant']!=null?json['cant']:null;
   }
 
 
