@@ -10,6 +10,7 @@ class SignUpController extends GetxController
   TextEditingController confirmPasswordControllerSign = TextEditingController();
 
   RxString message = "".obs;
+  RxBool showMessageBox = false.obs;
   var messageColor = Colors.green.obs;
 
   void signup (BuildContext context)
@@ -28,6 +29,13 @@ class SignUpController extends GetxController
     if (isAllSpaces(email)) 
     {
       sendError("Email not provided.");
+      return;
+    }
+    
+    var validEstructure = RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+    if (!validEstructure.hasMatch(email)) 
+    {
+      sendError("Email not valid.");
       return;
     }
 
@@ -52,12 +60,25 @@ class SignUpController extends GetxController
   }
 
   void sendError(String text){
+    
     message.value = text;
     messageColor.value = Colors.red;
+    showMessageBox.value = true;
   }
 
   bool isAllSpaces(String input)
   {
     return input.replaceAll(' ', '') == '';
+  }
+
+  Widget returnSpace(){
+    if(showMessageBox.value)
+    {
+      return SizedBox(height: 15);
+    }
+    else
+    {
+      return SizedBox.shrink();
+    }
   }
 }

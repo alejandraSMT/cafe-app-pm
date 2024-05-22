@@ -129,6 +129,14 @@ class _signUpCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 15),
+                Obx(() => Text(
+                  controller.message.string,
+                  style: TextStyle(
+                    color: controller.messageColor.value
+                  ),
+                )),
+                Obx(() => controller.returnSpace()
+                ),
                 ElevatedButton(
                   onPressed: (){
                     controller.signup(context);
