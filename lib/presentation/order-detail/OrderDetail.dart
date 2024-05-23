@@ -176,7 +176,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       backgroundColor: MaterialStatePropertyAll(
                           Theme.of(context).primaryColor)),
                   onPressed: () {
-                    
+                    context.goNamed("orderConfirmation");
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

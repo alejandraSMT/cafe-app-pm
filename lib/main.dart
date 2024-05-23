@@ -9,6 +9,7 @@ import 'package:cafe_app/presentation/login/Login.dart';
 import 'package:cafe_app/presentation/cart/ShoppingCart.dart';
 import 'package:cafe_app/presentation/order-detail/OrderDetail.dart';
 import 'package:cafe_app/presentation/select-payment/SelectPayment.dart';
+import 'package:cafe_app/presentation/order-confirmation/OrderConfirmation.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +84,13 @@ final _router = GoRouter(
           path: '/addCard',
           builder: (context, state) => Scaffold(
             body: AddCard(),
+          ),
+        ),
+        GoRoute(
+          name: 'orderConfirmation',
+          path: '/orderConfirmation',
+          builder: (context, state) => Scaffold(
+            body: OrderConfirmation(),
           ),
         )
       ],
