@@ -8,6 +8,7 @@ class LoginController extends GetxController{
   TextEditingController passController = TextEditingController();
   RxString message = "".obs;
   var messageColor = Colors.green.obs;
+  RxBool checkedBox = false.obs;
 
   void login(BuildContext context){
     String email = emailController.text;
@@ -23,6 +24,11 @@ class LoginController extends GetxController{
       message.value = '';
     });
 
+  }
+
+  void changeCheckboxValue(){
+    print("value of checkbox: ${checkedBox.value}");
+    checkedBox.value = !checkedBox.value;
   }
 
 }
