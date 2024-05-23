@@ -46,7 +46,7 @@ final _router = GoRouter(
         GoRoute(
           name: 'signUp',
           path: '/signUp',
-          builder: (context, state) => const Scaffold(
+          builder: (context, state) => Scaffold(
             body: SignUp(),
           ),
         ),
