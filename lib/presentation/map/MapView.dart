@@ -3,10 +3,12 @@ import 'dart:convert';
 
 import 'package:cafe_app/models/MapPoint.dart';
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/presentation/map/MapController.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapView extends StatefulWidget {
@@ -20,59 +22,61 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
+  MapController controller = Get.put(MapController());
+  
   Completer<GoogleMapController> googleMapController = Completer();
   late GoogleMapController mapController;
 
   CameraPosition positionOfMap = CameraPosition(target:LatLng(-12.123134, -77.038200),zoom: 15.0);
 
-List<MapPoint> mapPoints = getMapPoints();
+// List<MapPoint> mapPoints = getMapPoints();
 
-  static List<MapPoint> getMapPoints() {
-    const data = [
-      {
-      "id": "1",
-      "name":"Local 1",
-      "latitude":"-12.1183458",
-      "longitude": "-77.0407428",
-      "address":"Av. Javier Prado 111",
-      "hours":"Lun - Vie: 8:00 am - 10:00 pm"
-    },
-    {
-      "id": "2",
-      "name":"Local 2",
-      "latitude":"-12.1191136",
-      "longitude": "-77.0358286",
-      "address":"Av. Javier Prado 111",
-      "hours":"Lun - Vie: 8:00 am - 10:00 pm"
-    },
-    {
-      "id": "3",
-      "name":"Local 3",
-      "latitude":"-12.1156956",
-      "longitude": "-77.03017490040199",
-      "address":"Av. Javier Prado 111",
-      "hours":"Lun - Vie: 8:00 am - 10:00 pm"
-    }
-    ];
-    return data.map<MapPoint>(MapPoint.fromJson).toList();
-  }
-  List<Marker> _marker = [];
+//   static List<MapPoint> getMapPoints() {
+//     const data = [
+//       {
+//       "id": "1",
+//       "name":"Local 1",
+//       "latitude":"-12.1183458",
+//       "longitude": "-77.0407428",
+//       "address":"Av. Javier Prado 111",
+//       "hours":"Lun - Vie: 8:00 am - 10:00 pm"
+//     },
+//     {
+//       "id": "2",
+//       "name":"Local 2",
+//       "latitude":"-12.1191136",
+//       "longitude": "-77.0358286",
+//       "address":"Av. Javier Prado 111",
+//       "hours":"Lun - Vie: 8:00 am - 10:00 pm"
+//     },
+//     {
+//       "id": "3",
+//       "name":"Local 3",
+//       "latitude":"-12.1156956",
+//       "longitude": "-77.03017490040199",
+//       "address":"Av. Javier Prado 111",
+//       "hours":"Lun - Vie: 8:00 am - 10:00 pm"
+//     }
+//     ];
+//     return data.map<MapPoint>(MapPoint.fromJson).toList();
+//   }
+//   List<Marker> _marker = [];
 
-  @override
-  void initState() {
-    mapPoints.toList().forEach((element) {
-      var marker = Marker(
-        markerId: MarkerId(element.id),
-        position: LatLng(double.parse(element.latitude),double.parse(element.longitude)),
-        infoWindow: InfoWindow(
-          title: element.name
-        ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)
-        );
-        _marker.add(marker);
-    });
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   mapPoints.toList().forEach((element) {
+  //     var marker = Marker(
+  //       markerId: MarkerId(element.id),
+  //       position: LatLng(double.parse(element.latitude),double.parse(element.longitude)),
+  //       infoWindow: InfoWindow(
+  //         title: element.name
+  //       ),
+  //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)
+  //       );
+  //       _marker.add(marker);
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +116,7 @@ List<MapPoint> mapPoints = getMapPoints();
                           compassEnabled: true,
                           myLocationButtonEnabled: true,
                           myLocationEnabled: true,
-                          markers: Set<Marker>.of(_marker)
+                          markers: Set<Marker>.of(controller.markers)
                         ),
                       ),
                     ),
@@ -138,7 +142,7 @@ List<MapPoint> mapPoints = getMapPoints();
                                           Row(
                                             children: [
                                               Text(
-                                                mapPoints[index].name,
+                                                controller.mapPoints[index].name,
                                                 style: TextStyle(
                                                   fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                   color: Colors.black,
@@ -154,7 +158,7 @@ List<MapPoint> mapPoints = getMapPoints();
                                                 fontWeight: FontWeight.w500)
                                               ),
                                               Text(
-                                                mapPoints[index].address,
+                                                controller.mapPoints[index].address,
                                                 style: TextStyle(
                                                   fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                   color: Colors.black,
@@ -167,7 +171,7 @@ List<MapPoint> mapPoints = getMapPoints();
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  mapPoints[index].hours,
+                                                  controller.mapPoints[index].hours,
                                                   style: TextStyle(
                                                     fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                     color: Colors.grey
@@ -193,7 +197,7 @@ List<MapPoint> mapPoints = getMapPoints();
                             );
                           },
                           separatorBuilder:(context, index) => Divider(thickness: 0,color: Colors.transparent),
-                          itemCount: mapPoints.length
+                          itemCount: controller.mapPoints.length
                         ),
                       ),
                     )
@@ -227,7 +231,7 @@ List<MapPoint> mapPoints = getMapPoints();
                           compassEnabled: true,
                           myLocationButtonEnabled: true,
                           myLocationEnabled: true,
-                          markers: Set<Marker>.of(_marker)
+                          markers: Set<Marker>.of(controller.markers)
                         ),
                       ),
                     ),
@@ -253,7 +257,7 @@ List<MapPoint> mapPoints = getMapPoints();
                                             Row(
                                               children: [
                                                 Text(
-                                                  mapPoints[index].name,
+                                                  controller.mapPoints[index].name,
                                                   style: TextStyle(
                                                     fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                     color: Colors.black,
@@ -269,7 +273,7 @@ List<MapPoint> mapPoints = getMapPoints();
                                                   fontWeight: FontWeight.w500)
                                                 ),
                                                 Text(
-                                                  mapPoints[index].address,
+                                                  controller.mapPoints[index].address,
                                                   style: TextStyle(
                                                     fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                     color: Colors.black,
@@ -282,7 +286,7 @@ List<MapPoint> mapPoints = getMapPoints();
                                               child: Row(
                                                 children: [
                                                   Text(
-                                                    mapPoints[index].hours,
+                                                    controller.mapPoints[index].hours,
                                                     style: TextStyle(
                                                       fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                       color: Colors.grey
@@ -308,7 +312,7 @@ List<MapPoint> mapPoints = getMapPoints();
                               );
                             },
                             separatorBuilder:(context, index) => Divider(thickness: 0,color: Colors.transparent),
-                            itemCount: mapPoints.length
+                            itemCount: controller.mapPoints.length
                           ),
                         ),
                       )
