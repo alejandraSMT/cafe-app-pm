@@ -12,6 +12,7 @@ class Product{
   List<Ingredient>? ingredients;
   List<SizeCup>? sizes;
   String? cant;
+  int? categoryId;
 
   Product({
     required this.name,
@@ -20,7 +21,8 @@ class Product{
     required this.price,
     this.ingredients,
     this.sizes,
-    this.cant
+    this.cant,
+    this.categoryId
   });
 
   Product.fromJson(Map<String,dynamic> json){
@@ -41,6 +43,7 @@ class Product{
        });
     }
     cant = json['cant']!=null?json['cant']:null;
+    categoryId=json['categoryId']!=null?json['categoryId']:null;
   }
 
 
