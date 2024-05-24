@@ -9,13 +9,13 @@ class DetailProductController extends GetxController{
   final HomePageController controller = Get.put(HomePageController());
   Rx<Product> productSelected = Product(productId: "", name: "", price: "").obs;
   RxDouble totalPrice = 0.0.obs;
-  RxInt totalUnits = 0.obs;
+  RxInt totalUnits = 1.obs;
   RxInt sizeSelected = 0.obs;
 
   void getProductDetail(String productId){
     productSelected.value = controller.popular.where((element) => element.productId == productId).first;
     totalPrice.value = double.parse(productSelected.value.price!);
-    totalUnits.value = 0;
+    totalUnits.value = 1;
     sizeSelected.value = 0;
   }
 
@@ -25,7 +25,7 @@ class DetailProductController extends GetxController{
   }
 
   void reduceTotalAmount(){
-    if(totalUnits.value > 0){
+    if(totalUnits.value > 1){
       totalUnits.value -= 1;
       calculateTotal();
     }

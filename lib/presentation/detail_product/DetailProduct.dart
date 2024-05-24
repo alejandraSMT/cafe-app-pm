@@ -275,7 +275,7 @@ class _buttons extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Obx(() => Text(
-                            "Add s/ ${controller.totalPrice.value!}",
+                            "Add s/ ${controller.totalPrice.value!.toStringAsFixed(2)}",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: Theme.of(context)

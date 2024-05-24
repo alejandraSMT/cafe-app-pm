@@ -186,7 +186,8 @@ class HomePageController extends GetxController {
   RxList filteredList = [].obs;
 
   void initialCategoryName(){
-    categoryName.value = popular[0].name!;
+    filteredList.clear();
+    categoryName.value = categories[0].name;
     filteredList.addAll(popular.where((element) => element.categoryId! == selectedCategory.value));
   }
 
