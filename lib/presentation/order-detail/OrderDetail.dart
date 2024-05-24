@@ -75,7 +75,7 @@ class _OrderDetailState extends State<OrderDetail> {
                           return ListTile(
                             titleAlignment: ListTileTitleAlignment.top,
                             title: Text(
-                              "${controller.productsCart[index].name!} - x${controller.productsCart[index].cant!}",
+                              "${controller.productsCart[index].cant!}x - ${controller.productsCart[index].name!}",
                               style: TextStyle(
                                   fontSize: Theme.of(context)
                                       .textTheme

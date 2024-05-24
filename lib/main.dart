@@ -54,7 +54,7 @@ final _router = GoRouter(
         GoRoute(
           name: 'shoppingCart',
           path: '/shoppingCart',
-          builder: (context, state) => const Scaffold(
+          builder: (context, state) => Scaffold(
             body: ShoppingCart(),
           ),
         ),

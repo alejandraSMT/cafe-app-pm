@@ -11,6 +11,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:cafe_app/presentation/cart/ShoppingCartController.dart';
 
 class DetailProduct extends StatefulWidget {
   DetailProduct({super.key, required this.index});
@@ -24,7 +25,11 @@ class DetailProduct extends StatefulWidget {
 class _DetailProductState extends State<DetailProduct> {
   final DetailProductController detailController =
       Get.put(DetailProductController());
+  final ShoppingCartController cartController =
+      Get.put(ShoppingCartController());
   final scrollContoller = ScrollController();
+
+  
 
   @override
   void initState() {
@@ -37,7 +42,7 @@ class _DetailProductState extends State<DetailProduct> {
     //final product = controller.popular[int.parse(widget.index)];
     final product = detailController.productSelected.value;
     return Scaffold(
-      bottomSheet: _buttons(controller: detailController, index: widget.index),
+      bottomSheet: _buttons(controller: detailController, index: widget.index, product: product, cartController: cartController),
       body: Stack(children: [
         Container(
           child: Image.network(product.image!),
@@ -207,10 +212,14 @@ class _buttons extends StatelessWidget {
     super.key,
     required this.controller,
     required this.index,
+    required this.cartController,
+    required this.product
   });
 
   final DetailProductController controller;
+  final ShoppingCartController cartController;
   final String index;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +276,14 @@ class _buttons extends StatelessWidget {
             Container(
               constraints: BoxConstraints(maxWidth: 170),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  cartController.addToCart(
+                    product,
+                    controller.totalUnits.value,
+                    controller.totalPrice.value
+                  );
+                  context.goNamed("main");
+                },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Row(
