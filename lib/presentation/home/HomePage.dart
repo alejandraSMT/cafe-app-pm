@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisCount: 2,
               childAspectRatio: 0.70/1,
               children: List.generate(controller.filteredList.length, (index) => 
-                ProductCard(popular: controller.filteredList, index: index)
+                ProductCard(popular: controller.filteredList, index: index, product: controller.filteredList[index],)
               ),
               shrinkWrap: true,
             )
@@ -192,17 +192,19 @@ class ProductCard extends StatelessWidget {
     super.key,
     required this.popular,
     required this.index,
+    required this.product
   });
 
   //final List<Product> popular;
   final RxList popular;
   final int index;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.goNamed("detailProduct", pathParameters: {"id":(index+1).toString()} );
+        context.goNamed("detailProduct", pathParameters: {"id":product.productId!} );
       },
       child: Container(
             margin: EdgeInsets.symmetric(vertical: 2),

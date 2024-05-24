@@ -67,20 +67,6 @@ class HomePageController extends GetxController {
         "categoryId": 1
       },
       {
-        "name": "Honey almondmilk",
-        "price": "20.10",
-        "description": "Cold brew lightly sweetenet",
-        "image":
-            "https://londonschoolofcoffee.com/cdn/shop/products/LSC_Product_Pic_600_x_469_9_1_600x490.png?v=1582562355",
-        "ingredients": [
-          {"ingredientName": "Milk"}
-        ],
-        "sizes":[
-          {"size":"Small"}
-        ],
-        "categoryId": 1
-      },
-      {
         "productId": "3",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
@@ -150,19 +136,6 @@ class HomePageController extends GetxController {
         ],
         "categoryId": 3
       },
-      {
-        "name": "Signature coffee",
-        "price": "23.50",
-        "description": "Cold brew lightly sweetenet",
-        "image":
-            "https://londonschoolofcoffee.com/cdn/shop/products/LSC_Product_Pic_600_x_469_9_1_600x490.png?v=1582562355",
-        "ingredients": [
-          {"ingredientName": "Milk"},
-          {"ingredientName": "Coffee"}
-        ],
-        "categoryId": 4
-      },
-      
       {
         "productId": "8",
         "name": "Premium coffee Signature",
