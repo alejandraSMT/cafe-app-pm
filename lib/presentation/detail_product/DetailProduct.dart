@@ -11,6 +11,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:cafe_app/presentation/cart/ShoppingCartController.dart';
 
 class DetailProduct extends StatefulWidget {
   DetailProduct({super.key, required this.index});
@@ -25,6 +26,8 @@ class _DetailProductState extends State<DetailProduct> {
   final DetailProductController detailController =
       Get.put(DetailProductController());
   final scrollContoller = ScrollController();
+
+  
 
   @override
   void initState() {

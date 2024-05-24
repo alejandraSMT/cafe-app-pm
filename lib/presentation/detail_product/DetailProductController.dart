@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
-class DetailProductController extends GetxController{
 
+class DetailProductController extends GetxController{
   final HomePageController controller = Get.put(HomePageController());
+
   Rx<Product> productSelected = Product(productId: "", name: "", price: "").obs;
   RxDouble totalPrice = 0.0.obs;
   RxInt totalUnits = 1.obs;
@@ -40,5 +41,5 @@ class DetailProductController extends GetxController{
   void setSize(int size){
     sizeSelected.value = size;
   }
-
+  
 }
