@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cafe_app/models/CartItem.dart';
 import 'package:cafe_app/models/Product.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
@@ -10,8 +11,19 @@ import 'package:go_router/go_router.dart';
 import 'package:cafe_app/presentation/cart/ShoppingCartController.dart';
 import 'package:get/get.dart';
 
-class ShoppingCart extends StatelessWidget {
+class ShoppingCart extends StatefulWidget {
+  @override
+  State<ShoppingCart> createState() => _ShoppingCartState();
+}
+
+class _ShoppingCartState extends State<ShoppingCart> {
   final ShoppingCartController controller = Get.put(ShoppingCartController());
+
+  @override
+  void initState() {
+    controller.calculateTotal();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +55,7 @@ class ShoppingCart extends StatelessWidget {
             Expanded(
               child: Obx(() => ListView.separated(
                 itemBuilder: (context, index) {
-                  return ProductShopping(product: controller.cartProducts[index]);
+                  return ProductShopping(product: controller.cartProducts.value[index]);
                 },
                 itemCount: controller.cartProducts.length,
                 separatorBuilder: (context, index) => Divider(thickness: 0, color: Colors.transparent),
@@ -65,7 +77,7 @@ class ShoppingCart extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "s/ ${controller.calculateTotal()}",
+                        "s/ ${controller.total}",
                         style: TextStyle(
                           fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                           fontWeight: FontWeight.bold
@@ -113,7 +125,7 @@ class ProductShopping extends StatelessWidget {
     required this.product,
   }) : super(key: key);
 
-  final Product product;
+  final CartItem product;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +149,7 @@ class ProductShopping extends StatelessWidget {
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Image.network(
-                  product.image!,
+                  product.product.image!,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -149,7 +161,7 @@ class ProductShopping extends StatelessWidget {
                   Container(
                     constraints: BoxConstraints(maxWidth: 200),
                     child: Text(
-                      "${product.name}",
+                      "${product.product.name}",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize),
@@ -165,7 +177,7 @@ class ProductShopping extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          "s/ ${product.price}",
+                          "s/ ${product.totalPrice}",
                           style: TextStyle(
                             fontSize: Theme.of(context).textTheme.bodySmall!.fontSize),
                           overflow: TextOverflow.ellipsis,
@@ -189,7 +201,7 @@ class ProductShopping extends StatelessWidget {
                                 size: 15,
                               ),
                             ),
-                            Text("1"),
+                            Text("${product.quantity}"),
                             RawMaterialButton(
                               onPressed: () {},
                               elevation: 0,

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/presentation/cart/ShoppingCartController.dart';
 import 'package:cafe_app/presentation/home/HomePageController.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
@@ -27,6 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   Color colorCard = Colors.white70;
   HomePageController controller = Get.put(HomePageController());
+  ShoppingCartController cartController = Get.put(ShoppingCartController());
   @override
   void initState() {
       controller.initialCategoryName();
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                HomeHeader(style: style),
+                HomeHeader(style: style, cartController: cartController),
                 const Text(
                   "Categories",
                   textAlign: TextAlign.left,
@@ -260,9 +262,11 @@ class HomeHeader extends StatelessWidget {
   const HomeHeader({
     super.key,
     required this.style,
+    required this.cartController
   });
 
   final TextStyle style;
+  final ShoppingCartController cartController;
 
   @override
   Widget build(BuildContext context) {
@@ -282,7 +286,19 @@ class HomeHeader extends StatelessWidget {
           },
           shape: const CircleBorder(),
           elevation: 2,
-          child: const Icon(Icons.shopping_cart),
+          child: Badge(
+            label: cartController.totalItems.value > 0? 
+            Obx(() => 
+              Text(
+                textAlign: TextAlign.end,
+                "${cartController.totalItems.value}",
+                style: TextStyle(
+                fontWeight: FontWeight.bold
+                ),
+              )
+             ):null,
+            child : Icon(Icons.shopping_cart)
+          )
         ),
       ],
     );
