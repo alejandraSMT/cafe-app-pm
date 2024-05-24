@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/presentation/past-orders/PastOrders.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,12 @@ class _ProfileState extends State<Profile> {
                               color: Colors.black),
                         ),
                         onTap: () {
-                          print("CLICKEO EN OPCION: $option");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PastOrders(),
+                            ),
+                          );
                         },
                         style: ListTileStyle.list,
                       )

@@ -26,11 +26,10 @@ class _HomePageState extends State<HomePage> {
   void getNext() {}
 
   Color colorCard = Colors.white70;
-  int selectedCategory = 0;
   HomePageController controller = Get.put(HomePageController());
   @override
   void initState() {
-      controller.categoryName.value = controller.categories[0].name;
+      controller.initialCategoryName();
       super.initState();
   }
 
@@ -64,22 +63,24 @@ class _HomePageState extends State<HomePage> {
           Container(
             constraints: BoxConstraints(maxHeight: 60),
             child: ListView.separated(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return _tabCategory(
-                      categoryName: controller.categories[index].name,
-                      selectedCategory: selectedCategory,
-                      index: index,
-                      onSelectedChange: () {
-                        setState(() {
-                          selectedCategory = index;
-                          controller.setCategoryName(controller.categories[index].name);
-                        });
-                      });
-                },
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: controller.categories.length),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Obx(() => 
+                      _tabCategory(
+                        categoryName: controller.categories[index].name,
+                        selectedCategory: controller.selectedCategory.value,
+                        categoryId: controller.categories[index].id,
+                        onSelectedChange: () {
+                          setState(() {
+                            controller.changeCategorySelected(controller.categories[index].id);
+                            controller.setCategoryName(controller.categories[index].name);
+                          });
+                        })
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: controller.categories.length),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -95,12 +96,22 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Expanded(
+          /*Expanded(
             child: GridView.count(
               crossAxisCount: 2,
               childAspectRatio: 0.70/1,
               children: List.generate(controller.popular.length, (index) => 
                 ProductCard(popular: controller.popular, index: index)
+              ),
+              shrinkWrap: true,
+            )
+          )*/
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 0.70/1,
+              children: List.generate(controller.filteredList.length, (index) => 
+                ProductCard(popular: controller.filteredList, index: index)
               ),
               shrinkWrap: true,
             )
@@ -115,12 +126,12 @@ class _tabCategory extends StatefulWidget {
   const _tabCategory(
       {super.key,
       required this.categoryName,
-      required this.index,
+      required this.categoryId,
       required this.selectedCategory,
       required this.onSelectedChange});
 
   final String categoryName;
-  final int index;
+  final int categoryId;
   final int selectedCategory;
   final VoidCallback onSelectedChange;
 
@@ -137,7 +148,7 @@ class _tabCategoryState extends State<_tabCategory> {
         widget.onSelectedChange();
       },
       child: Card(
-        color: widget.selectedCategory == widget.index ? Theme.of(context).primaryColor : Colors.white70,
+        color: widget.selectedCategory == widget.categoryId ? Theme.of(context).primaryColor : Colors.white70,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25))),
         elevation: null,
@@ -164,7 +175,7 @@ class _tabCategoryState extends State<_tabCategory> {
                 Text(
                   widget.categoryName,
                   style: TextStyle(
-                    color: widget.selectedCategory == widget.index ? Colors.white : Colors.black
+                    color: widget.selectedCategory == widget.categoryId ? Colors.white : Colors.black
                   ),
                 )
               ],
@@ -183,14 +194,15 @@ class ProductCard extends StatelessWidget {
     required this.index,
   });
 
-  final List<Product> popular;
+  //final List<Product> popular;
+  final RxList popular;
   final int index;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.goNamed("detailProduct", pathParameters: {"id":index.toString()} );
+        context.goNamed("detailProduct", pathParameters: {"id":(index+1).toString()} );
       },
       child: Container(
             margin: EdgeInsets.symmetric(vertical: 2),
