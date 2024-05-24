@@ -29,55 +29,6 @@ class _MapViewState extends State<MapView> {
 
   CameraPosition positionOfMap = CameraPosition(target:LatLng(-12.123134, -77.038200),zoom: 15.0);
 
-// List<MapPoint> mapPoints = getMapPoints();
-
-//   static List<MapPoint> getMapPoints() {
-//     const data = [
-//       {
-//       "id": "1",
-//       "name":"Local 1",
-//       "latitude":"-12.1183458",
-//       "longitude": "-77.0407428",
-//       "address":"Av. Javier Prado 111",
-//       "hours":"Lun - Vie: 8:00 am - 10:00 pm"
-//     },
-//     {
-//       "id": "2",
-//       "name":"Local 2",
-//       "latitude":"-12.1191136",
-//       "longitude": "-77.0358286",
-//       "address":"Av. Javier Prado 111",
-//       "hours":"Lun - Vie: 8:00 am - 10:00 pm"
-//     },
-//     {
-//       "id": "3",
-//       "name":"Local 3",
-//       "latitude":"-12.1156956",
-//       "longitude": "-77.03017490040199",
-//       "address":"Av. Javier Prado 111",
-//       "hours":"Lun - Vie: 8:00 am - 10:00 pm"
-//     }
-//     ];
-//     return data.map<MapPoint>(MapPoint.fromJson).toList();
-//   }
-//   List<Marker> _marker = [];
-
-  // @override
-  // void initState() {
-  //   mapPoints.toList().forEach((element) {
-  //     var marker = Marker(
-  //       markerId: MarkerId(element.id),
-  //       position: LatLng(double.parse(element.latitude),double.parse(element.longitude)),
-  //       infoWindow: InfoWindow(
-  //         title: element.name
-  //       ),
-  //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)
-  //       );
-  //       _marker.add(marker);
-  //   });
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,122 +78,11 @@ class _MapViewState extends State<MapView> {
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
                           itemBuilder:(context, index) {
-                            return Container(
-                              constraints: BoxConstraints(maxWidth: 350, minWidth: 300),
-                              child: Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Column(
-                                    children: [
-                                      Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                controller.mapPoints[index].name,
-                                                style: TextStyle(
-                                                  fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500
-                                                )
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text("Address: ",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500)
-                                              ),
-                                              Text(
-                                                controller.mapPoints[index].address,
-                                                style: TextStyle(
-                                                  fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
-                                                  color: Colors.black,
-                                                ),
-                                                overflow: TextOverflow.visible,
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  controller.mapPoints[index].hours,
-                                                  style: TextStyle(
-                                                    fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
-                                                    color: Colors.grey
-                                                  ),
-                                                  overflow: TextOverflow.visible,
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                     Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                                     Expanded(
-                                       child: Container(
-                                        constraints: BoxConstraints(maxHeight: 60, maxWidth: 300),
-                                        child:  Placeholder(),
-                                       ),
-                                     ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          separatorBuilder:(context, index) => Divider(thickness: 0,color: Colors.transparent),
-                          itemCount: controller.mapPoints.length
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          } else {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Card(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: Container(
-                        constraints: BoxConstraints(maxWidth: 400),
-                        child: GoogleMap(
-                          onMapCreated: (GoogleMapController controller) {
-                            if (!googleMapController.isCompleted) {
-                              googleMapController.complete(controller);
-                            }
-                          },
-                          initialCameraPosition: positionOfMap,
-                          mapType: MapType.normal,
-                          zoomControlsEnabled: true,
-                          compassEnabled: true,
-                          myLocationButtonEnabled: true,
-                          myLocationEnabled: true,
-                          markers: Set<Marker>.of(controller.markers)
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                        child: Container(
-                          constraints: BoxConstraints(maxHeight: 200),
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemBuilder:(context, index) {
-                              return Container(
+                            return GestureDetector(
+                              onTap: () {
+                                controller.changeMapPosition(positionOfMap, controller.mapPoints[index].latitude, controller.mapPoints[index].longitude);
+                              },
+                              child: Container(
                                 constraints: BoxConstraints(maxWidth: 350, minWidth: 300),
                                 child: Card(
                                   child: Padding(
@@ -302,10 +142,137 @@ class _MapViewState extends State<MapView> {
                                        Expanded(
                                          child: Container(
                                           constraints: BoxConstraints(maxHeight: 60, maxWidth: 300),
-                                          child:  Placeholder(),
+                                          child:  Image.network(
+                                            controller.mapPoints[index].image,
+                                            fit: BoxFit.cover,
+                                          ),
                                          ),
                                        ),
                                       ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          separatorBuilder:(context, index) => Divider(thickness: 0,color: Colors.transparent),
+                          itemCount: controller.mapPoints.length
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Card(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: 400),
+                        child: GoogleMap(
+                          onMapCreated: (GoogleMapController controller) {
+                            if (!googleMapController.isCompleted) {
+                              googleMapController.complete(controller);
+                            }
+                          },
+                          initialCameraPosition: positionOfMap,
+                          mapType: MapType.normal,
+                          zoomControlsEnabled: true,
+                          compassEnabled: true,
+                          myLocationButtonEnabled: true,
+                          myLocationEnabled: true,
+                          markers: Set<Marker>.of(controller.markers)
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                        child: Container(
+                          constraints: BoxConstraints(maxHeight: 200),
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder:(context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                controller.changeMapPosition(positionOfMap, controller.mapPoints[index].latitude, controller.mapPoints[index].longitude);
+                                },
+                                child: Container(
+                                  constraints: BoxConstraints(maxWidth: 350, minWidth: 300),
+                                  child: Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Column(
+                                        children: [
+                                          Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    controller.mapPoints[index].name,
+                                                    style: TextStyle(
+                                                      fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.w500
+                                                    )
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text("Address: ",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w500)
+                                                  ),
+                                                  Text(
+                                                    controller.mapPoints[index].address,
+                                                    style: TextStyle(
+                                                      fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
+                                                      color: Colors.black,
+                                                    ),
+                                                    overflow: TextOverflow.visible,
+                                                  ),
+                                                ],
+                                              ),
+                                              Container(
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      controller.mapPoints[index].hours,
+                                                      style: TextStyle(
+                                                        fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
+                                                        color: Colors.grey
+                                                      ),
+                                                      overflow: TextOverflow.visible,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                         Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                                         Expanded(
+                                           child: Container(
+                                            constraints: BoxConstraints(maxHeight: 60, maxWidth: 300),
+                                            child:  Image.network(
+                                              controller.mapPoints[index].image,
+                                              fit: BoxFit.cover,
+                                            ),
+                                           ),
+                                         ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

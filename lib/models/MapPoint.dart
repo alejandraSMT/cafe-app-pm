@@ -5,6 +5,7 @@ class MapPoint{
   final String longitude;
   final String address;
   final String hours;
+  final String image;
 
   const MapPoint({
     required this.id,
@@ -12,7 +13,8 @@ class MapPoint{
     required this.latitude,
     required this.longitude,
     required this.address,
-    required this.hours
+    required this.hours,
+    required this.image
   });
 
   static MapPoint fromJson(json) => MapPoint(
@@ -21,7 +23,8 @@ class MapPoint{
     latitude: json['latitude'], 
     longitude: json['longitude'], 
     address: json['address'],
-    hours: json['hours']
+    hours: json['hours'],
+    image: json['image']
   );
 
 
