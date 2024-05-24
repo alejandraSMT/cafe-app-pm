@@ -3,6 +3,8 @@ import 'dart:ffi';
 import 'package:cafe_app/models/Ingredient.dart';
 import 'package:cafe_app/models/SizeCup.dart';
 import 'package:flutter/cupertino.dart';
+import 'Ingredient.dart';
+import 'SizeCup.dart';
 
 class Product{
   String? productId;
