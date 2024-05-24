@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:go_router/go_router.dart';
 import './LoginController.dart';
 
@@ -120,9 +121,13 @@ class _loginForm extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Checkbox(
-                          value: false,
-                          onChanged: (value) {},
+                        Obx(() => 
+                          Checkbox(
+                              value: controller.checkedBox.value,
+                              onChanged: (value) {
+                                controller.changeCheckboxValue();
+                              },
+                          )
                         ),
                         Text(
                           "Remember me",
