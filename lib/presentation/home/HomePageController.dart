@@ -22,12 +22,19 @@ class HomePageController extends GetxController {
   static List<Product> getPopularProducts() {
     const data = [
       {
+        "productId": "1",
         "name": "Honey almondmilk cold brew brew brew brew brew brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
         "image":
             "https://londonschoolofcoffee.com/cdn/shop/products/LSC_Product_Pic_600_x_469_9_1_600x490.png?v=1582562355",
         "ingredients": [
+          {"ingredientName": "Milk"},
+          {"ingredientName": "Coffee"},
+          {"ingredientName": "Coffee"},
+          {"ingredientName": "Coffee"},
+          {"ingredientName": "Coffee"},
+          {"ingredientName": "Coffee"},
           {"ingredientName": "Milk"},
           {"ingredientName": "Coffee"},
           {"ingredientName": "Coffee"},
@@ -41,6 +48,7 @@ class HomePageController extends GetxController {
         ]
       },
       {
+        "productId": "2",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -55,6 +63,7 @@ class HomePageController extends GetxController {
         ]
       },
       {
+        "productId": "3",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -72,6 +81,7 @@ class HomePageController extends GetxController {
       },
       
       {
+        "productId": "4",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -84,6 +94,7 @@ class HomePageController extends GetxController {
       },
       
       {
+        "productId": "5",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -95,6 +106,7 @@ class HomePageController extends GetxController {
         ]
       },
       {
+        "productId": "6",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -107,6 +119,7 @@ class HomePageController extends GetxController {
       },
       
       {
+        "productId": "7",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -119,6 +132,7 @@ class HomePageController extends GetxController {
       },
       
       {
+        "productId": "8",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",

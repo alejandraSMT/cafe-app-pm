@@ -5,6 +5,7 @@ import 'package:cafe_app/models/SizeCup.dart';
 import 'package:flutter/cupertino.dart';
 
 class Product{
+  String? productId;
   String? name;
   String? description;
   String? image;
@@ -14,6 +15,7 @@ class Product{
   String? cant;
 
   Product({
+    required this.productId,
     required this.name,
     this.description,
     this.image,
@@ -24,6 +26,7 @@ class Product{
   });
 
   Product.fromJson(Map<String,dynamic> json){
+    productId=json['productId'];
     name=json['name'];
     description=json['description']!=null ? json['description'] :  null; 
     image=json['image']!=null ? json['image'] : null;
