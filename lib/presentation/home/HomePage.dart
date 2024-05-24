@@ -202,7 +202,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.goNamed("detailProduct", pathParameters: {"id":index.toString()} );
+        context.goNamed("detailProduct", pathParameters: {"id":(index+1).toString()} );
       },
       child: Container(
             margin: EdgeInsets.symmetric(vertical: 2),

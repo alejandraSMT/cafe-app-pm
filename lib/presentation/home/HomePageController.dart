@@ -24,12 +24,19 @@ class HomePageController extends GetxController {
   static List<Product> getPopularProducts() {
     const data = [
       {
+        "productId": "1",
         "name": "Honey almondmilk cold brew brew brew brew brew brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
         "image":
             "https://londonschoolofcoffee.com/cdn/shop/products/LSC_Product_Pic_600_x_469_9_1_600x490.png?v=1582562355",
         "ingredients": [
+          {"ingredientName": "Milk"},
+          {"ingredientName": "Coffee"},
+          {"ingredientName": "Coffee"},
+          {"ingredientName": "Coffee"},
+          {"ingredientName": "Coffee"},
+          {"ingredientName": "Coffee"},
           {"ingredientName": "Milk"},
           {"ingredientName": "Coffee"},
           {"ingredientName": "Coffee"},
@@ -44,6 +51,7 @@ class HomePageController extends GetxController {
         "categoryId": 1
       },
       {
+        "productId": "2",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -73,6 +81,7 @@ class HomePageController extends GetxController {
         "categoryId": 1
       },
       {
+        "productId": "3",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -90,6 +99,7 @@ class HomePageController extends GetxController {
         "categoryId": 2
       },
       {
+        "productId": "4",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -102,8 +112,9 @@ class HomePageController extends GetxController {
         "categoryId": 2
       },
       {
-        "name": "Honey almondmilk cold",
-        "price": "17.25",
+        "productId": "5",
+        "name": "Honey almondmilk cold brew",
+        "price": "14.25",
         "description": "Cold brew lightly sweetenet",
         "image":
             "https://londonschoolofcoffee.com/cdn/shop/products/LSC_Product_Pic_600_x_469_9_1_600x490.png?v=1582562355",
@@ -114,8 +125,9 @@ class HomePageController extends GetxController {
         "categoryId": 2
       },
       {
-        "name": "Honey almondmilk brew",
-        "price": "22.25",
+        "productId": "6",
+        "name": "Honey almondmilk cold brew",
+        "price": "14.25",
         "description": "Cold brew lightly sweetenet",
         "image":
             "https://londonschoolofcoffee.com/cdn/shop/products/LSC_Product_Pic_600_x_469_9_1_600x490.png?v=1582562355",
@@ -126,6 +138,7 @@ class HomePageController extends GetxController {
         "categoryId": 2
       },
       {
+        "productId": "7",
         "name": "Honey almondmilk cold brew",
         "price": "14.25",
         "description": "Cold brew lightly sweetenet",
@@ -151,6 +164,7 @@ class HomePageController extends GetxController {
       },
       
       {
+        "productId": "8",
         "name": "Premium coffee Signature",
         "price": "27.30",
         "description": "Cold brew lightly sweetenet",
