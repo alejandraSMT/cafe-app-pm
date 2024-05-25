@@ -1,16 +1,19 @@
-
 import 'dart:async';
 import 'dart:convert';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import './SignUpController.dart';
 
 class SignUp extends StatelessWidget {
-  const SignUp({
+  SignUp({
     super.key,
   });
+
+  SignUpController controller = Get.put(SignUpController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class SignUp extends StatelessWidget {
                   height: 150,
                 ),
               ),
-            _signUpCard()
+            _signUpCard(controller: controller)
             ],
           )
         ],
@@ -39,7 +42,10 @@ class SignUp extends StatelessWidget {
 class _signUpCard extends StatelessWidget {
   const _signUpCard({
     super.key,
+    required this.controller,
   });
+
+  final SignUpController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +79,7 @@ class _signUpCard extends StatelessWidget {
                   ),
                   Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                 TextField(
+                  controller: controller.nameControllerSign,
                   decoration: InputDecoration(
                     isDense: true,
                     border: OutlineInputBorder(
@@ -85,6 +92,7 @@ class _signUpCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  controller: controller.emailControllerSign,
                   decoration: InputDecoration(
                     isDense: true,
                     border: OutlineInputBorder(
@@ -96,6 +104,7 @@ class _signUpCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  controller: controller.passwordControllerSign,
                   obscureText: true,
                   decoration: InputDecoration(
                     isDense: true,
@@ -108,6 +117,7 @@ class _signUpCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  controller: controller.confirmPasswordControllerSign,
                   obscureText: true,
                   decoration: InputDecoration(
                     isDense: true,
@@ -119,8 +129,18 @@ class _signUpCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 15),
+                Obx(() => Text(
+                  controller.message.string,
+                  style: TextStyle(
+                    color: controller.messageColor.value
+                  ),
+                )),
+                Obx(() => controller.returnSpace()
+                ),
                 ElevatedButton(
-                  onPressed: (){}, 
+                  onPressed: (){
+                    controller.signup(context);
+                  }, 
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(300, 40),
                     backgroundColor: Theme.of(context).primaryColor,
