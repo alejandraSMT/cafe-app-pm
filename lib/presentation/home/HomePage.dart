@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
       controller.initialCategoryName();
+      controller.getShared();
       super.initState();
   }
 
