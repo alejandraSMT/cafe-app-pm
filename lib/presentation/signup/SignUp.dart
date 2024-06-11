@@ -92,6 +92,19 @@ class _signUpCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  controller: controller.lastnameControllerSign,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(25))
+                    ),
+                    hintText: 'Enter lastname',
+                    prefixIcon: Icon(Icons.person)
+                  ),
+                ),
+                SizedBox(height: 10,),
+                TextField(
                   controller: controller.emailControllerSign,
                   decoration: InputDecoration(
                     isDense: true,
@@ -139,7 +152,7 @@ class _signUpCard extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: (){
-                    controller.signup(context);
+                    controller.registerUserApi(context);
                   }, 
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(300, 40),
