@@ -3,11 +3,17 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/Category.dart';
 import '../../models/Product.dart';
 
 class HomePageController extends GetxController {
+
+  void getShared() async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    print("Token: ${sharedPreferences.getString("token")}");
+  }
   List<Category> categories = getCategories();
   static List<Category> getCategories() {
     const categories = [
