@@ -27,6 +27,10 @@ class LoginController extends GetxController{
       if (response.statusCode == 200) {
         print(jsonDecode(response.body));
         saveToken(json.decode(response.body));
+        if(checkedBox.isTrue){
+          SharedPreferences sp = await SharedPreferences.getInstance();
+          sp.setBool("isLogged", true);
+        }
         context.goNamed("main");
       } else {
         sendError(response.body.toString());

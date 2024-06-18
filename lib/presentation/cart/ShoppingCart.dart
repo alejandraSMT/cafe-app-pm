@@ -31,7 +31,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            context.goNamed("main");
+            context.pop();
           },
           child: Icon(
             Icons.arrow_back,
@@ -93,7 +93,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       ),
                       onPressed: (){
                         controller.completeOrder();
-                        context.goNamed("orderDetail");
+                        context.push("/orderDetail");
                       }, 
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

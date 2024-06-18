@@ -1,20 +1,20 @@
 class User{
-  final String name;
-  final String lastname;
-  final String email;
-  final String password;
+  String name;
+  String lastname;
+  String email;
+  String? photo;
 
-  const User({
-    required this.name,
-    required this.lastname,
-    required this.email,
-    required this.password
+  User({
+    this.name = "",
+    this.lastname = "",
+    this.email = "",
+    this.photo = ""
   });
 
   static User fromJson(json) => User(
     name: json['nombre'],
     lastname: json['apellido'],
-    email: json['emailAdress'],
-    password: json['contraseña']
+    email: json['emailAddress'],
+    photo: json['foto']
   );
 }
