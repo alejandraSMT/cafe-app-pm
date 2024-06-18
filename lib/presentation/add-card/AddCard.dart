@@ -28,7 +28,7 @@ class _AddCardState extends State<AddCard> {
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
-              context.goNamed("selectPayment");
+              context.pop();
             },
             child: Icon(
               Icons.arrow_back,

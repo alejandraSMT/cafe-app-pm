@@ -283,7 +283,7 @@ class HomeHeader extends StatelessWidget {
         RawMaterialButton(
           padding: EdgeInsets.all(5),
           onPressed: () {
-            context.goNamed("shoppingCart");
+            context.push("/shoppingCart");
           },
           shape: const CircleBorder(),
           elevation: 2,

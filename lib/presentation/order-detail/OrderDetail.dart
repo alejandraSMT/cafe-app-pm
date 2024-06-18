@@ -30,7 +30,7 @@ class _OrderDetailState extends State<OrderDetail> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            context.goNamed("shoppingCart");
+            context.pop();
           },
           child: Icon(
             Icons.arrow_back,
@@ -137,7 +137,7 @@ class _OrderDetailState extends State<OrderDetail> {
                           ),
                            GestureDetector(
                             onTap: (){
-                              context.goNamed("selectPayment");
+                              context.push("/selectPayment");
                             },
                             child : Text(
                             "Select payment method",
