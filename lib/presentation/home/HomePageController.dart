@@ -1,3 +1,4 @@
+import 'package:cafe_app/presentation/profile/ProfileController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
@@ -9,6 +10,18 @@ import '../../models/Category.dart';
 import '../../models/Product.dart';
 
 class HomePageController extends GetxController {
+  RxBool loaded = false.obs;
+  RxString userName = "".obs;
+  ProfileController profileController = Get.put(ProfileController());
+
+  void onLoad(BuildContext context) async {
+    loaded.value = false;
+    await profileController.getUserData(context);
+    userName.value = profileController.userData.name;
+    initialCategoryName();
+    getShared();
+    loaded.value = true;
+  }
 
   void getShared() async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

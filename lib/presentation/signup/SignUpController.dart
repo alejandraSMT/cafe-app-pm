@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import '../../globals.dart' as globals;
+import '../../utils/functions.dart';
 
 class SignUpController extends GetxController {
   TextEditingController nameControllerSign = TextEditingController();
@@ -87,10 +88,6 @@ class SignUpController extends GetxController {
     message.value = text;
     messageColor.value = Colors.red;
     showMessageBox.value = true;
-  }
-
-  bool isAllSpaces(String input) {
-    return input.replaceAll(' ', '') == '';
   }
 
   Widget returnSpace() {

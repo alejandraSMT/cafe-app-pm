@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cafe_app/models/CartItem.dart';
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/presentation/common/AppBarCoffee.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,25 +29,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            context.pop();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        title: Text(
-          "My cart",
-          style: TextStyle(
-            fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      appBar: AppBarCoffee(title: "My cart"),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(

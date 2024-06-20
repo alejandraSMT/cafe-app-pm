@@ -1,3 +1,4 @@
+import 'package:cafe_app/presentation/common/AppBarCoffee.dart';
 import 'package:cafe_app/presentation/order-detail/OrderDetailController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,25 +28,7 @@ class _OrderDetailState extends State<OrderDetail> {
     var paddingSubtitles = EdgeInsets.symmetric(vertical: 10.0);
 
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            context.pop();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        title: Text(
-          "Order Detail",
-          style: TextStyle(
-              fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      appBar: AppBarCoffee(title: "Order detail"),
       body: Expanded(
           child: SingleChildScrollView(
             controller: scrollContoller,

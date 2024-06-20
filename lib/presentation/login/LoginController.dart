@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:cafe_app/presentation/home/HomePageController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -16,10 +17,13 @@ class LoginController extends GetxController{
   var messageColor = Colors.green.obs;
   RxBool checkedBox = false.obs;
 
+  HomePageController homePageController = Get.put(HomePageController());
+
   Future<void> login(BuildContext context) async{
     try{
       String email = emailController.text;
       String pass = passController.text;
+      SharedPreferences sp = await SharedPreferences.getInstance();
       final response = await http.get(
           Uri.parse('${globals.url_base}api/usuario/iniciarSesion?emailAddress=${email}&contraseña=${pass}'),
           headers: {'Content-Type': 'application/json'});
@@ -28,7 +32,6 @@ class LoginController extends GetxController{
         print(jsonDecode(response.body));
         saveToken(json.decode(response.body));
         if(checkedBox.isTrue){
-          SharedPreferences sp = await SharedPreferences.getInstance();
           sp.setBool("isLogged", true);
         }
         context.goNamed("main");

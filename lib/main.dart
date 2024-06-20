@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:cafe_app/MainController.dart';
 import 'package:cafe_app/models/Product.dart';
 import 'package:cafe_app/presentation/add-card/AddCard.dart';
+import 'package:cafe_app/presentation/change-password/ChangePassword.dart';
 import 'package:cafe_app/presentation/past-orders/PastOrders.dart';
 import 'package:cafe_app/presentation/profile/settings-profile/SettingsProfile.dart';
 import 'package:cafe_app/presentation/detail_product/DetailProduct.dart';
@@ -110,6 +111,13 @@ final _router = GoRouter(
           path: '/pastOrders',
           builder: (context, state) => Scaffold(
             body: PastOrders(),
+          ),
+        ),
+        GoRoute(
+          name: 'changePassword',
+          path: '/changePassword',
+          builder: (context, state) => Scaffold(
+            body: ChangePassword(),
           ),
         )
       ],

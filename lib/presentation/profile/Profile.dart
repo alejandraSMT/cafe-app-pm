@@ -24,6 +24,13 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final ProfileController controller = Get.put(ProfileController());
+
+  @override
+  void initState() {
+    controller.getUserData(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var options = {
@@ -50,7 +57,7 @@ class _ProfileState extends State<Profile> {
           children: [
             Column(
               children: [
-                _profileHeader(),
+                _profileHeader(controller: controller),
                 ...options.map<Widget>((option) {
                   var index = options
                       .toList()
@@ -97,11 +104,19 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-class _profileHeader extends StatelessWidget {
+class _profileHeader extends StatefulWidget {
   const _profileHeader({
     super.key,
+    required this.controller
   });
 
+  final ProfileController controller;
+
+  @override
+  State<_profileHeader> createState() => _profileHeaderState();
+}
+
+class _profileHeaderState extends State<_profileHeader> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -122,7 +137,7 @@ class _profileHeader extends StatelessWidget {
               ),
             ),
             Text(
-              "Nombre",
+              "${widget.controller.userData.name} ${widget.controller.userData.lastname}",
               style: TextStyle(
                   fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                   fontWeight: FontWeight.bold),
