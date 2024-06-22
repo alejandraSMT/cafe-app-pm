@@ -71,7 +71,7 @@ class AddCardController extends GetxController {
       };
 
       final response = await http.post(
-          Uri.parse('${globals.url_base}api/tarjeta/crearTarjeta'),
+          Uri.parse('${globals.url_base}api/usuario/agregarTarjeta'),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token'
@@ -82,7 +82,7 @@ class AddCardController extends GetxController {
 
       loaded.value = true;
       
-      if(response.statusCode == 200){
+      if(response.statusCode == 201){
         context.pop();
       }else{
         sendError(response.body.toString());

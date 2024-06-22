@@ -145,9 +145,10 @@ class _SelectPaymentState extends State<SelectPayment> {
                                     leading: Image.asset(
                                         "assets/images/cash-on.png"),
                                     title: Text("Cash on", style: style),
-                                    trailing: controller.paymentMethod.value == 0
-                                        ? Icon(Icons.check)
-                                        : null,
+                                    trailing:
+                                        controller.paymentMethod.value == 0
+                                            ? Icon(Icons.check)
+                                            : null,
                                   )))
                         ],
                       ),
@@ -164,6 +165,24 @@ class _SelectPaymentState extends State<SelectPayment> {
                     ),
                   )
                 ],
-              )));
+              )),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0, left: 20, right: 20),
+          child: ElevatedButton(
+              onPressed: () {
+                context.pop();
+                //context.goNamed('main');
+              },
+              style: ElevatedButton.styleFrom(
+                  minimumSize: Size(350, 40),
+                  backgroundColor: Theme.of(context).primaryColor,
+                  textStyle: TextStyle(color: Colors.white)),
+              child: Text(
+                "Save",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize),
+              )),
+        ));
   }
 }

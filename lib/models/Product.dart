@@ -6,50 +6,42 @@ import 'package:flutter/cupertino.dart';
 import 'Ingredient.dart';
 import 'SizeCup.dart';
 
-class Product{
-  String? productId;
-  String? name;
-  String? description;
-  String? image;
-  String? price;
-  List<Ingredient>? ingredients;
-  List<SizeCup>? sizes;
-  String? cant;
-  int? categoryId;
+class Product {
+  int? productId = -1;
+  String? name = "";
+  String? description = "";
+  String? image = "";
+  double? price = 0;
+  List<Ingredient>? ingredients = [];
+  List<SizeCup>? sizes = [];
+  String? cant = "0";
+  int? categoryId = -1;
 
-  Product({
-    required this.productId,
-    required this.name,
-    this.description,
-    this.image,
-    required this.price,
-    this.ingredients,
-    this.sizes,
-    this.cant,
-    this.categoryId
-  });
+  Product(
+      {this.productId,
+      this.name,
+      this.description,
+      this.image,
+      this.price,
+      this.ingredients,
+      this.sizes,
+      this.cant,
+      this.categoryId});
 
-  Product.fromJson(Map<String,dynamic> json){
-    productId=json['productId'];
-    name=json['name'];
-    description=json['description']!=null ? json['description'] :  null; 
-    image=json['image']!=null ? json['image'] : null;
-    price=json['price'];
-    if(json['ingredients'] != null){
-      ingredients = <Ingredient>[];
-      (json['ingredients'] as List).forEach((element) {
-        ingredients!.add(Ingredient.fromJson(element));
-      });
-    }
-    if(json['sizes']!=null){
-      sizes = <SizeCup>[];
-      (json['sizes'] as List).forEach((element) {
-        sizes!.add(SizeCup.fromJson(element));
-       });
-    }
-    cant = json['cant']!=null?json['cant']:null;
-    categoryId=json['categoryId']!=null?json['categoryId']:null;
+  Product.fromJson(Map<dynamic, dynamic> json) {
+    productId = json['id'];
+    name = json['Nombre'];
+    description = json['Descripcion'];
+    image = json['Imagen'];
+    price = double.parse(json['Precio'].toString());
+    if (json['ingredientes'] != null) {
+        ingredients = <Ingredient>[];
+        for (var element in (json['ingredientes'] as List)) {
+          ingredients!.add(Ingredient.fromJson(element));
+        }
+      }
+    /*sizes = json['size'] != null ? SizeCup.fromJson(json['size']) as List<SizeCup>? : [];*/
+    cant = json['cant'] ?? "0";
+    categoryId = json['categoriaId'];
   }
-
-
 }

@@ -6,6 +6,7 @@ import 'package:cafe_app/MainController.dart';
 import 'package:cafe_app/models/Product.dart';
 import 'package:cafe_app/presentation/add-card/AddCard.dart';
 import 'package:cafe_app/presentation/change-password/ChangePassword.dart';
+import 'package:cafe_app/presentation/my-cards/MyCards.dart';
 import 'package:cafe_app/presentation/past-orders/PastOrders.dart';
 import 'package:cafe_app/presentation/profile/settings-profile/SettingsProfile.dart';
 import 'package:cafe_app/presentation/detail_product/DetailProduct.dart';
@@ -68,7 +69,7 @@ final _router = GoRouter(
           name: 'detailProduct',
           path: '/detailProduct/:id',
           builder: (context, state) => Scaffold(
-            body: DetailProduct(index: state.pathParameters["id"]!,),
+            body: DetailProduct(index: state.pathParameters["id"]!),
           ),
         ),
         GoRoute(
@@ -118,6 +119,13 @@ final _router = GoRouter(
           path: '/changePassword',
           builder: (context, state) => Scaffold(
             body: ChangePassword(),
+          ),
+        ),
+        GoRoute(
+          name: 'myCards',
+          path: '/myCards',
+          builder: (context, state) => Scaffold(
+            body: MyCards(),
           ),
         )
       ],

@@ -29,7 +29,7 @@ class _AddCardState extends State<AddCard> {
   }
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    AddCardController addCardController = Get.put(AddCardController());
+  AddCardController addCardController = Get.put(AddCardController());
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,8 @@ class _AddCardState extends State<AddCard> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 addCardController.message.value,
                                 style: TextStyle(color: Colors.red),
@@ -116,23 +117,28 @@ class _AddCardState extends State<AddCard> {
                           ],
                         )
                       : Container()),
-                  ElevatedButton(
-                      onPressed: () {
-                        addCardController.cardInfo(context);
-                        //context.goNamed('main');
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size(350, 40),
-                          backgroundColor: Theme.of(context).primaryColor,
-                          textStyle: TextStyle(color: Colors.white)),
-                      child: Text(
-                        "Add card",
-                        style: TextStyle(color: Colors.white),
-                      ))
                 ],
               )),
             )
           ],
+        ),
+        bottomSheet: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: ElevatedButton(
+              onPressed: () {
+                addCardController.cardInfo(context);
+                //context.goNamed('main');
+              },
+              style: ElevatedButton.styleFrom(
+                  minimumSize: Size(350, 40),
+                  backgroundColor: Theme.of(context).primaryColor,
+                  textStyle: TextStyle(color: Colors.white)),
+              child: Text(
+                "Add card",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize),
+              )),
         ));
     /*body: Expanded(
             child: SingleChildScrollView(

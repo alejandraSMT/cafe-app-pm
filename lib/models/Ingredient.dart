@@ -1,7 +1,14 @@
 class Ingredient {
- final String ingredientName;
+  int id;
+  String ingredientName;
 
-  const Ingredient({required this.ingredientName});
+  Ingredient({
+    required this.id,
+    required this.ingredientName
+  });
   
-  static Ingredient fromJson(Map<String,dynamic>json) => Ingredient(ingredientName: json['ingredientName']);
+  static Ingredient fromJson(json) => Ingredient(
+    id: json['id'],
+    ingredientName: json['Nombre']
+  );
 }

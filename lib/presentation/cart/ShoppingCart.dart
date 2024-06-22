@@ -36,13 +36,31 @@ class _ShoppingCartState extends State<ShoppingCart> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: Obx(() => ListView.separated(
+              child: Obx(() => controller.cartProducts.isNotEmpty ? 
+              ListView.separated(
                 itemBuilder: (context, index) {
                   return ProductShopping(product: controller.cartProducts.value[index]);
                 },
                 itemCount: controller.cartProducts.length,
                 separatorBuilder: (context, index) => Divider(thickness: 0, color: Colors.transparent),
                 shrinkWrap: true,
+              ): Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.shopping_cart,
+                    color: Colors.grey,
+                    size: 60,
+                  ),
+                  Text(
+                    "Your cart is empty!",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize
+                    ),
+                    )
+                ],
               )),
             ),
             Padding(

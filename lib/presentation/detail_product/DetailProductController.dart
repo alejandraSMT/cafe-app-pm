@@ -1,23 +1,48 @@
+import 'dart:convert';
+
 import 'package:cafe_app/models/Product.dart';
 import 'package:cafe_app/presentation/home/HomePageController.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import '../../globals.dart' as globals;
 
 
 class DetailProductController extends GetxController{
   final HomePageController controller = Get.put(HomePageController());
 
-  Rx<Product> productSelected = Product(productId: "", name: "", price: "").obs;
+  RxBool loaded = false.obs;
+
+  Rx<Product> productSelected = Product().obs;
   RxDouble totalPrice = 0.0.obs;
   RxInt totalUnits = 1.obs;
   RxInt sizeSelected = 0.obs;
 
-  void getProductDetail(String productId){
-    productSelected.value = controller.popular.where((element) => element.productId == productId).first;
-    totalPrice.value = double.parse(productSelected.value.price!);
-    totalUnits.value = 1;
-    sizeSelected.value = 0;
+  Future<void> getProductDetail(String productId) async {
+    try{
+      loaded.value = false;
+
+      final response = await http.get(
+        Uri.parse("${globals.url_base}api/productos/traerproductoConIngredientes?id=$productId")
+      );
+
+      if(response.statusCode != 200){
+        return;
+      }
+
+      var body = Product.fromJson(json.decode(response.body)['producto']);
+      productSelected.value = body;
+
+
+      totalPrice.value = productSelected.value.price!;
+      totalUnits.value = 1;
+      sizeSelected.value = 0;
+
+      loaded.value = true;
+    }catch(e){
+      print(e);
+    }
   }
 
   void addTotalAmount(){
@@ -34,7 +59,7 @@ class DetailProductController extends GetxController{
 
   void calculateTotal(){
     if(totalUnits.value > 0){
-      totalPrice.value = double.parse(productSelected.value.price!)*totalUnits.value;
+      totalPrice.value = (productSelected.value.price!*totalUnits.value);
     }
   }
 

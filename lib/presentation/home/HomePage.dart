@@ -76,15 +76,15 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Obx(() => _tabCategory(
-                            categoryName: controller.categories[index].name,
+                            categoryName: controller.categories[index].name!,
                             selectedCategory: controller.selectedCategory.value,
-                            categoryId: controller.categories[index].id,
+                            categoryId: controller.categories[index].id!,
                             onSelectedChange: () {
                               setState(() {
                                 controller.changeCategorySelected(
-                                    controller.categories[index].id);
+                                    controller.categories[index].id!);
                                 controller.setCategoryName(
-                                    controller.categories[index].name);
+                                    controller.categories[index].name!);
                               });
                             }));
                       },
@@ -106,16 +106,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                /*Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 0.70/1,
-              children: List.generate(controller.popular.length, (index) => 
-                ProductCard(popular: controller.popular, index: index)
-              ),
-              shrinkWrap: true,
-            )
-          )*/
                 Expanded(
                     child: GridView.count(
                   crossAxisCount: 2,
@@ -231,8 +221,9 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        // ---------- CAMBIAR A PUSH PERO CON PARÁMETRO --------------
         context.goNamed("detailProduct",
-            pathParameters: {"id": product.productId!});
+            pathParameters: {"id": product.productId!.toString()});
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 2),

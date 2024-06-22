@@ -5,6 +5,6 @@ class SizeCup{
     required this.size
   });
 
-   static SizeCup fromJson(Map<String,dynamic>json) => SizeCup(size: json['size']);
+   static SizeCup fromJson(json) => SizeCup(size: json['size']);
 
 }

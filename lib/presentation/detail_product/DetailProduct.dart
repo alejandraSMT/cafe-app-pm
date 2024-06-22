@@ -29,8 +29,6 @@ class _DetailProductState extends State<DetailProduct> {
       Get.put(ShoppingCartController());
   final scrollContoller = ScrollController();
 
-  
-
   @override
   void initState() {
     detailController.getProductDetail(widget.index);
@@ -39,122 +37,160 @@ class _DetailProductState extends State<DetailProduct> {
 
   @override
   Widget build(BuildContext context) {
-    //final product = controller.popular[int.parse(widget.index)];
-    final product = detailController.productSelected.value;
-    return Scaffold(
-      bottomSheet: _buttons(controller: detailController, index: widget.index, product: product, cartController: cartController),
-      body: Stack(children: [
-        Container(
-          child: Image.network(product.image!),
-        ),
-        Padding(
-            padding: const EdgeInsets.only(top: 270.0),
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: 42),
-              controller: scrollContoller,
-              physics: ScrollPhysics(),
-              child: Container(
-                child:
-                  Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(50),
-                              topRight: Radius.circular(50))),
-                      margin: EdgeInsets.all(0),
-                      color: Colors.white,
-                      shadowColor: Colors.transparent,
-                      surfaceTintColor: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              product.name!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall!
-                                      .fontSize),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Text(product.description!),
-                            ),
-                            product.sizes != null
-                                ? Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, bottom: 10),
-                                    child: Container(
-                                      constraints:
-                                          BoxConstraints(maxHeight: 50),
-                                      child: ListView.separated(
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          itemBuilder: (context, indexSize) {
-                                            return Obx(() => _cardSize(
-                                                  product: product,
-                                                  indexSize: indexSize,
-                                                  onSelectedChange: () {
-                                                    setState(() {
-                                                      detailController
-                                                          .setSize(indexSize);
-                                                    });
-                                                  },
-                                                  sizedSelected:
-                                                      detailController
-                                                          .sizeSelected.value,
-                                                ));
-                                          },
-                                          separatorBuilder:
-                                              (context, indexSize) {
-                                            return Divider();
-                                          },
-                                          itemCount: product.sizes!.length),
-                                    ),
-                                  )
-                                : Text(""),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: Text(
-                                "Ingredients: ",
-                                style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontSize,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            ListView.separated(
-                                physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, pos) {
-                                    return ListTile(
-                                      visualDensity:
-                                          VisualDensity(vertical: -3),
-                                      leading: Icon(Icons.coffee_rounded),
-                                      title: Text(product
-                                          .ingredients![pos].ingredientName),
-                                      contentPadding: EdgeInsets.all(2),
-                                    );
-                                  },
-                                  separatorBuilder: (context, pos) {
-                                    return Divider(
-                                      color: Colors.grey,
-                                      thickness: 0.2,
-                                    );
-                                  },
-                                  itemCount: product.ingredients!.length)
-                          ],
-                        ),
-                      ))
+    print("DATOS EN PANTALLA: ${detailController.productSelected.value.name}");
+    return Obx(() => detailController.loaded.value
+        ? Scaffold(
+            bottomSheet: _buttons(
+                controller: detailController,
+                index: widget.index,
+                product: detailController.productSelected.value,
+                cartController: cartController),
+            body: Stack(children: [
+              Container(
+                child: Image.network(detailController.productSelected.value.image!),
               ),
-            )),
-        _onBackButton(),
-      ]),
-    );
+              Padding(
+                  padding: const EdgeInsets.only(top: 270.0),
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.only(bottom: 42),
+                    controller: scrollContoller,
+                    physics: ScrollPhysics(),
+                    child: Container(
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(50),
+                                    topRight: Radius.circular(50))),
+                            margin: EdgeInsets.all(0),
+                            color: Colors.white,
+                            shadowColor: Colors.transparent,
+                            surfaceTintColor: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(25.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    detailController.productSelected.value.name!,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall!
+                                            .fontSize),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(detailController.productSelected.value.description!),
+                                  ),
+                                  /*detailController.productSelected.value.sizes != null
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 10),
+                                          child: Container(
+                                            constraints:
+                                                BoxConstraints(maxHeight: 50),
+                                            child: ListView.separated(
+                                                shrinkWrap: true,
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemBuilder:
+                                                    (context, indexSize) {
+                                                  return Obx(() => _cardSize(
+                                                        product: detailController.productSelected.value,
+                                                        indexSize: indexSize,
+                                                        onSelectedChange: () {
+                                                          setState(() {
+                                                            detailController
+                                                                .setSize(
+                                                                    indexSize);
+                                                          });
+                                                        },
+                                                        sizedSelected:
+                                                            detailController
+                                                                .sizeSelected
+                                                                .value,
+                                                      ));
+                                                },
+                                                separatorBuilder:
+                                                    (context, indexSize) {
+                                                  return Divider();
+                                                },
+                                                itemCount:
+                                                    detailController.productSelected.value.sizes!.length),
+                                          ),
+                                        )
+                                      : Container(),*/
+                                      detailController.productSelected.value.ingredients != null
+                                      ? Obx(() => 
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10.0),
+                                              child: Text(
+                                                "Ingredients: ",
+                                                style: TextStyle(
+                                                    fontSize: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .fontSize,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ),
+                                            ListView.separated(
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
+                                                shrinkWrap: true,
+                                                itemBuilder: (context, pos) {
+                                                  return ListTile(
+                                                    visualDensity:
+                                                        VisualDensity(
+                                                            vertical: -3),
+                                                    leading: Icon(
+                                                        Icons.coffee_rounded),
+                                                    title: Text(detailController.productSelected.value
+                                                        .ingredients![pos]
+                                                        .ingredientName),
+                                                    contentPadding:
+                                                        EdgeInsets.all(2),
+                                                  );
+                                                },
+                                                separatorBuilder:
+                                                    (context, pos) {
+                                                  return Divider(
+                                                    color: Colors.grey,
+                                                    thickness: 0.2,
+                                                  );
+                                                },
+                                                itemCount:
+                                                    detailController.productSelected.value.ingredients!.length)
+                                          ],
+                                        )
+                                      )
+                                      : Container()
+                                ],
+                              ),
+                            ))),
+                  )),
+              _onBackButton(),
+            ]),
+          )
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                ),
+              )
+            ],
+          ));
   }
 }
 
@@ -208,13 +244,12 @@ class _cardSizeState extends State<_cardSize> {
 }
 
 class _buttons extends StatelessWidget {
-  const _buttons({
-    super.key,
-    required this.controller,
-    required this.index,
-    required this.cartController,
-    required this.product
-  });
+  const _buttons(
+      {super.key,
+      required this.controller,
+      required this.index,
+      required this.cartController,
+      required this.product});
 
   final DetailProductController controller;
   final ShoppingCartController cartController;
@@ -277,11 +312,8 @@ class _buttons extends StatelessWidget {
               constraints: BoxConstraints(maxWidth: 170),
               child: ElevatedButton(
                 onPressed: () {
-                  cartController.addToCart(
-                    product,
-                    controller.totalUnits.value,
-                    controller.totalPrice.value
-                  );
+                  cartController.addToCart(product, controller.totalUnits.value,
+                      controller.totalPrice.value);
                   context.goNamed("main");
                 },
                 child: Padding(

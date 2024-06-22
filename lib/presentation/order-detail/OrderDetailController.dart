@@ -9,85 +9,21 @@ class OrderDetailController extends GetxController{
   static List<Product> getProductsCart() {
     const data = [
       {
-        "name": "Honey almondmilk cold brew",
-        "price": "14.25",
+        "Nombre": "Honey almondmilk cold brew",
+        "Precio": 14.25,
         "sizes":[
           {"size": "Medium"}
         ],
         "cant":"2"
       },
       {
-        "name": "Honey almondmilk cold brew",
-        "price": "14.25",
+        "Nombre": "Honey almondmilk cold brew",
+        "Precio": 14.25,
         "sizes":[
           {"size": "Medium"}
         ],
         "cant":"1"
-      },
-      {
-        "name": "Honey almondmilk cold brew brew brew brew brew brew",
-        "price": "14.25",
-        "sizes":[
-          {"size":"Small"}
-        ],
-        "cant":"2"
-      },
-      {
-        "name": "Honey almondmilk cold brew brew brew brew brew brew",
-        "price": "14.25",
-        "sizes":[
-          {"size":"Small"}
-        ],
-        "cant":"2"
-      },
-      {
-        "name": "Honey almondmilk cold brew brew brew brew brew brew",
-        "price": "14.25",
-        "sizes":[
-          {"size":"Small"}
-        ],
-        "cant":"2"
-      },
-      {
-        "name": "Honey almondmilk cold brew brew brew brew brew brew",
-        "price": "14.25",
-        "sizes":[
-          {"size":"Small"}
-        ],
-        "cant":"2"
-      },
-      {
-        "name": "Honey almondmilk cold brew brew brew brew brew brew",
-        "price": "14.25",
-        "sizes":[
-          {"size":"Small"}
-        ],
-        "cant":"2"
-      },
-      {
-        "name": "Honey almondmilk cold brew brew brew brew brew brew",
-        "price": "14.25",
-        "sizes":[
-          {"size":"Small"}
-        ],
-        "cant":"2"
-      },
-      {
-        "name": "Honey almondmilk cold brew brew brew brew brew brew",
-        "price": "14.25",
-        "sizes":[
-          {"size":"Small"}
-        ],
-        "cant":"2"
-      },
-      {
-        "name": "Honey almondmilk cold brew brew brew brew brew brew",
-        "price": "14.25",
-        "sizes":[
-          {"size":"Small"}
-        ],
-        "cant":"2"
-      },
+      }
     ];
     return data.map<Product>(Product.fromJson).toList();
   }
