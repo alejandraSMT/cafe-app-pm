@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:ffi';
 // ignore: unnecessary_import
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/models/SizeCup.dart';
 import 'package:cafe_app/presentation/detail_product/DetailProductController.dart';
 import 'package:cafe_app/presentation/home/HomePageController.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,7 +32,9 @@ class _DetailProductState extends State<DetailProduct> {
 
   @override
   void initState() {
-    detailController.getProductDetail(widget.index);
+    detailController.onLoading(widget.index);
+    print("TAMAÑO 1: ${detailController.sizes[2].size}");
+    print("LISTA: ${detailController.sizes.toList().toString()}");
     super.initState();
   }
 
@@ -82,7 +85,7 @@ class _DetailProductState extends State<DetailProduct> {
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Text(detailController.productSelected.value.description!),
                                   ),
-                                  /*detailController.productSelected.value.sizes != null
+                                  detailController.sizes.isNotEmpty
                                       ? Padding(
                                           padding: const EdgeInsets.only(
                                               top: 10, bottom: 10),
@@ -96,7 +99,7 @@ class _DetailProductState extends State<DetailProduct> {
                                                 itemBuilder:
                                                     (context, indexSize) {
                                                   return Obx(() => _cardSize(
-                                                        product: detailController.productSelected.value,
+                                                        sizeItem: detailController.sizes[indexSize],
                                                         indexSize: indexSize,
                                                         onSelectedChange: () {
                                                           setState(() {
@@ -116,10 +119,10 @@ class _DetailProductState extends State<DetailProduct> {
                                                   return Divider();
                                                 },
                                                 itemCount:
-                                                    detailController.productSelected.value.sizes!.length),
+                                                    detailController.sizes.length),
                                           ),
                                         )
-                                      : Container(),*/
+                                      : Container(),
                                       detailController.productSelected.value.ingredients != null
                                       ? Obx(() => 
                                         Column(
@@ -196,12 +199,12 @@ class _DetailProductState extends State<DetailProduct> {
 class _cardSize extends StatefulWidget {
   const _cardSize(
       {super.key,
-      required this.product,
+      required this.sizeItem,
       required this.indexSize,
       required this.onSelectedChange,
       required this.sizedSelected});
 
-  final Product product;
+  final SizeCup sizeItem;
   final int indexSize;
   final VoidCallback onSelectedChange;
   final int sizedSelected;
@@ -230,7 +233,7 @@ class _cardSizeState extends State<_cardSize> {
         child: Padding(
           padding: EdgeInsets.all(10),
           child: Text(
-            "${widget.product.sizes![widget.indexSize].size}",
+            widget.sizeItem.size,
             style: TextStyle(
                 color: widget.sizedSelected == widget.indexSize
                     ? Colors.white
@@ -311,8 +314,8 @@ class _buttons extends StatelessWidget {
               constraints: BoxConstraints(maxWidth: 170),
               child: ElevatedButton(
                 onPressed: () {
-                  cartController.addToCart(product, controller.totalUnits.value,
-                      controller.totalPrice.value);
+                  controller.addProductToCart(product.productId!, controller.totalUnits.value, controller.sizeSelected.value+1);
+                  //cartController.addToCart(product, controller.totalUnits.value,controller.totalPrice.value);
                   context.pop();
                 },
                 child: Padding(

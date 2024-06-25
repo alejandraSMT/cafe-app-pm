@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/models/SizeCup.dart';
 import 'package:cafe_app/presentation/home/HomePageController.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
@@ -18,6 +19,32 @@ class DetailProductController extends GetxController{
   RxDouble totalPrice = 0.0.obs;
   RxInt totalUnits = 1.obs;
   RxInt sizeSelected = 0.obs;
+  List<SizeCup> sizes = [];
+
+  Future<void> onLoading(String productId) async{
+    sizes.clear();
+    await setSizes();
+    print("LARGO DE LA LIST DE TAMAÑOS: ${sizes.length}");
+    await getProductDetail(productId);
+  }
+
+  Future<void> setSizes() async{
+    const body = [
+      {
+        "id": 1,
+        "size": "Small"
+      },
+      {
+        "id": 2,
+        "size": "Medium"
+      },
+      {
+        "id": 3,
+        "size": "Large"
+      }
+    ];
+    sizes.addAll(body.map<SizeCup>(SizeCup.fromJson).toList());
+  }
 
   Future<void> getProductDetail(String productId) async {
     try{
@@ -42,6 +69,37 @@ class DetailProductController extends GetxController{
       loaded.value = true;
     }catch(e){
       print(e);
+    }
+  }
+  
+  Future<void> addProductToCart(int productId, int cant, int size) async{
+    try{
+      Map body = {
+        "userId": "6",
+        "productoId": productId.toString(),
+        "cantidad": cant.toString(),
+        "tamaño": size.toString()
+      };
+
+      print("BODY: $body");
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      var token = sharedPreferences.getString('token');
+      final response = await http.post(
+        Uri.parse("${globals.url_base}api/carritoDetalle/agregarACarrito"),
+        headers: {
+          'Authorization': 'Bearer $token'},
+        body: body
+      );
+
+      if(response.statusCode != 201){
+        print("error!: ${response.body}");
+        return;
+      }
+
+      print(response.body);
+
+    }catch(e){
+      print("Error adding to cart: $e");
     }
   }
 
