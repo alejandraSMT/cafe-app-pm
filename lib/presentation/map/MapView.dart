@@ -41,7 +41,9 @@ class _MapViewState extends State<MapView> {
                 fontWeight: FontWeight.bold),
           ),
         ),
-        body: OrientationBuilder(builder: ((context, orientation) {
+        body: Obx(() => 
+          controller.loaded.value ? 
+          OrientationBuilder(builder: ((context, orientation) {
           if (orientation == Orientation.portrait) {
             return Center(
               child: Padding(
@@ -80,7 +82,7 @@ class _MapViewState extends State<MapView> {
                           itemBuilder:(context, index) {
                             return GestureDetector(
                               onTap: () {
-                                controller.changeMapPosition(positionOfMap, controller.mapPoints[index].latitude, controller.mapPoints[index].longitude);
+                                controller.changeMapPosition(positionOfMap, controller.storesList[index].latitude, controller.storesList[index].longitude);
                               },
                               child: Container(
                                 constraints: BoxConstraints(maxWidth: 350, minWidth: 300),
@@ -97,7 +99,7 @@ class _MapViewState extends State<MapView> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  controller.mapPoints[index].name,
+                                                  controller.storesList[index].name,
                                                   style: TextStyle(
                                                     fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                     color: Colors.black,
@@ -113,7 +115,7 @@ class _MapViewState extends State<MapView> {
                                                   fontWeight: FontWeight.w500)
                                                 ),
                                                 Text(
-                                                  controller.mapPoints[index].address,
+                                                  controller.storesList[index].address,
                                                   style: TextStyle(
                                                     fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                     color: Colors.black,
@@ -126,7 +128,7 @@ class _MapViewState extends State<MapView> {
                                               child: Row(
                                                 children: [
                                                   Text(
-                                                    controller.mapPoints[index].hours,
+                                                    controller.storesList[index].hours,
                                                     style: TextStyle(
                                                       fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                       color: Colors.grey
@@ -143,7 +145,7 @@ class _MapViewState extends State<MapView> {
                                          child: Container(
                                           constraints: BoxConstraints(maxHeight: 60, maxWidth: 300),
                                           child:  Image.network(
-                                            controller.mapPoints[index].image,
+                                            controller.storesList[index].image,
                                             fit: BoxFit.cover,
                                           ),
                                          ),
@@ -156,7 +158,7 @@ class _MapViewState extends State<MapView> {
                             );
                           },
                           separatorBuilder:(context, index) => Divider(thickness: 0,color: Colors.transparent),
-                          itemCount: controller.mapPoints.length
+                          itemCount: controller.storesList.length
                         ),
                       ),
                     )
@@ -203,7 +205,7 @@ class _MapViewState extends State<MapView> {
                             itemBuilder:(context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                controller.changeMapPosition(positionOfMap, controller.mapPoints[index].latitude, controller.mapPoints[index].longitude);
+                                controller.changeMapPosition(positionOfMap, controller.storesList[index].latitude, controller.storesList[index].longitude);
                                 },
                                 child: Container(
                                   constraints: BoxConstraints(maxWidth: 350, minWidth: 300),
@@ -220,7 +222,7 @@ class _MapViewState extends State<MapView> {
                                               Row(
                                                 children: [
                                                   Text(
-                                                    controller.mapPoints[index].name,
+                                                    controller.storesList[index].name,
                                                     style: TextStyle(
                                                       fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                       color: Colors.black,
@@ -236,7 +238,7 @@ class _MapViewState extends State<MapView> {
                                                     fontWeight: FontWeight.w500)
                                                   ),
                                                   Text(
-                                                    controller.mapPoints[index].address,
+                                                    controller.storesList[index].address,
                                                     style: TextStyle(
                                                       fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                       color: Colors.black,
@@ -249,7 +251,7 @@ class _MapViewState extends State<MapView> {
                                                 child: Row(
                                                   children: [
                                                     Text(
-                                                      controller.mapPoints[index].hours,
+                                                      controller.storesList[index].hours,
                                                       style: TextStyle(
                                                         fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                         color: Colors.grey
@@ -266,7 +268,7 @@ class _MapViewState extends State<MapView> {
                                            child: Container(
                                             constraints: BoxConstraints(maxHeight: 60, maxWidth: 300),
                                             child:  Image.network(
-                                              controller.mapPoints[index].image,
+                                              controller.storesList[index].image,
                                               fit: BoxFit.cover,
                                             ),
                                            ),
@@ -279,7 +281,7 @@ class _MapViewState extends State<MapView> {
                               );
                             },
                             separatorBuilder:(context, index) => Divider(thickness: 0,color: Colors.transparent),
-                            itemCount: controller.mapPoints.length
+                            itemCount: controller.storesList.length
                           ),
                         ),
                       )
@@ -289,6 +291,19 @@ class _MapViewState extends State<MapView> {
               
             );
           }
-        })));
+        })) : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                ),
+              )
+            ],
+          )
+        ));
   }
 }

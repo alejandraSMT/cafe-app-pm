@@ -37,7 +37,6 @@ class _DetailProductState extends State<DetailProduct> {
 
   @override
   Widget build(BuildContext context) {
-    print("DATOS EN PANTALLA: ${detailController.productSelected.value.name}");
     return Obx(() => detailController.loaded.value
         ? Scaffold(
             bottomSheet: _buttons(
@@ -314,7 +313,7 @@ class _buttons extends StatelessWidget {
                 onPressed: () {
                   cartController.addToCart(product, controller.totalUnits.value,
                       controller.totalPrice.value);
-                  context.goNamed("main");
+                  context.pop();
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),

@@ -68,9 +68,12 @@ final _router = GoRouter(
         GoRoute(
           name: 'detailProduct',
           path: '/detailProduct/:id',
-          builder: (context, state) => Scaffold(
-            body: DetailProduct(index: state.pathParameters["id"]!),
-          ),
+          builder: (context, state) {
+            final id = state.pathParameters["id"];
+            return Scaffold(
+              body: DetailProduct(index: id!),
+            );
+          },
         ),
         GoRoute(
           name: 'orderDetail',

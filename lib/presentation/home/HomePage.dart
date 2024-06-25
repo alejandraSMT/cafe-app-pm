@@ -221,9 +221,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // ---------- CAMBIAR A PUSH PERO CON PARÁMETRO --------------
-        context.goNamed("detailProduct",
-            pathParameters: {"id": product.productId!.toString()});
+        context.push("/detailProduct/${product.productId!.toString()}");
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 2),
