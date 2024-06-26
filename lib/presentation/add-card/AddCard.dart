@@ -46,22 +46,27 @@ class _AddCardState extends State<AddCard> {
 
     return Scaffold(
         appBar: AppBarCoffee(title: "Add card"),
-        body: Column(
-          children: [
-            CreditCardWidget(
-              cardBgColor: Colors.blue,
-              cardNumber: addCardController.cardNumber.value,
-              expiryDate: addCardController.expiryDate.value,
-              cardHolderName: addCardController.cardHolderName.value,
-              cvvCode: addCardController.cvvCode.value,
-              showBackView: false, //true when you want to show cvv(back) view
-              isHolderNameVisible: true,
-              onCreditCardWidgetChange: (CreditCardBrand
-                  brand) {}, // Callback for anytime credit card brand is changed
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                  child: Column(
+        body: Container(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CreditCardWidget(
+                cardBgColor: Colors.blue,
+                cardNumber: addCardController.cardNumber.value,
+                expiryDate: addCardController.expiryDate.value,
+                cardHolderName: addCardController.cardHolderName.value,
+                cvvCode: addCardController.cvvCode.value,
+                showBackView: false, //true when you want to show cvv(back) view
+                isHolderNameVisible: true,
+                onCreditCardWidgetChange: (CreditCardBrand
+                    brand) {}, // Callback for anytime credit card brand is changed
+              ),
+              Expanded(
+                  child: SingleChildScrollView(
+                      child: Column(
                 children: [
                   CreditCardForm(
                     obscureCvv: true,
@@ -74,29 +79,25 @@ class _AddCardState extends State<AddCard> {
                     inputConfiguration: InputConfiguration(
                       cardNumberDecoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25))),
+                            borderRadius: BorderRadius.all(Radius.circular(25))),
                         labelText: 'Number',
                         hintText: 'XXXX XXXX XXXX XXXX',
                       ),
                       expiryDateDecoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25))),
+                            borderRadius: BorderRadius.all(Radius.circular(25))),
                         labelText: 'Expired Date',
                         hintText: 'XX/XX',
                       ),
                       cvvCodeDecoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25))),
+                            borderRadius: BorderRadius.all(Radius.circular(25))),
                         labelText: 'CVV',
                         hintText: 'XXX',
                       ),
                       cardHolderDecoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25))),
+                            borderRadius: BorderRadius.all(Radius.circular(25))),
                         labelText: 'Card Holder',
                       ),
                     ),
@@ -107,8 +108,7 @@ class _AddCardState extends State<AddCard> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 addCardController.message.value,
                                 style: TextStyle(color: Colors.red),
@@ -117,89 +117,34 @@ class _AddCardState extends State<AddCard> {
                           ],
                         )
                       : Container()),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            addCardController.cardInfo(context);
+                            //context.goNamed('main');
+                          },
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(350, 40),
+                              backgroundColor: Theme.of(context).primaryColor,
+                              textStyle: TextStyle(color: Colors.white)),
+                          child: Text(
+                            "Add card",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .fontSize),
+                          )),
+                    ),
+                  )
                 ],
-              )),
-            )
-          ],
-        ),
-        bottomSheet: Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: ElevatedButton(
-              onPressed: () {
-                addCardController.cardInfo(context);
-                //context.goNamed('main');
-              },
-              style: ElevatedButton.styleFrom(
-                  minimumSize: Size(350, 40),
-                  backgroundColor: Theme.of(context).primaryColor,
-                  textStyle: TextStyle(color: Colors.white)),
-              child: Text(
-                "Add card",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize),
-              )),
+              )))
+            ],
+          ),
         ));
-    /*body: Expanded(
-            child: SingleChildScrollView(
-                controller: scrollContoller,
-                physics: ScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Name on card", style: labelStyle),
-                      SizedBox(height: 5),
-                      const TextField(
-                          decoration: InputDecoration(
-                              isDense: true,
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25))),
-                              hintText: 'Name')),
-                      SizedBox(height: 10),
-                      Text("Number on card", style: labelStyle),
-                      SizedBox(height: 5),
-                      const TextField(
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              isDense: true,
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25))),
-                              hintText: 'Number')),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            constraints: BoxConstraints(maxWidth: 150),
-                            child: TextField(
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    isDense: true,
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(25))),
-                                    hintText: 'Number')),
-                          ),
-                          Container(
-                            constraints: BoxConstraints(maxWidth: 150),
-                            child: TextField(
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    isDense: true,
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(25))),
-                                    hintText: 'Number')),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ))));*/
   }
 }

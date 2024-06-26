@@ -1,11 +1,11 @@
 class Store{
   int id = -1;
   String name = "";
-  double latitude = 0.0;
-  double longitude = 0.0;
-  String hours = "";
-  String address = "";
-  String image = "";
+  double? latitude = 0.0;
+  double? longitude = 0.0;
+  String? hours = "";
+  String? address = "";
+  String? image = "";
 
   Store({
     required this.id,

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cafe_app/models/MapPoint.dart';
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/presentation/common/LoadingIndicator.dart';
 import 'package:cafe_app/presentation/map/MapController.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
@@ -82,7 +83,7 @@ class _MapViewState extends State<MapView> {
                           itemBuilder:(context, index) {
                             return GestureDetector(
                               onTap: () {
-                                controller.changeMapPosition(positionOfMap, controller.storesList[index].latitude, controller.storesList[index].longitude);
+                                controller.changeMapPosition(positionOfMap, controller.storesList[index].latitude!, controller.storesList[index].longitude!);
                               },
                               child: Container(
                                 constraints: BoxConstraints(maxWidth: 350, minWidth: 300),
@@ -115,7 +116,7 @@ class _MapViewState extends State<MapView> {
                                                   fontWeight: FontWeight.w500)
                                                 ),
                                                 Text(
-                                                  controller.storesList[index].address,
+                                                  controller.storesList[index].address!,
                                                   style: TextStyle(
                                                     fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                     color: Colors.black,
@@ -128,7 +129,7 @@ class _MapViewState extends State<MapView> {
                                               child: Row(
                                                 children: [
                                                   Text(
-                                                    controller.storesList[index].hours,
+                                                    controller.storesList[index].hours!,
                                                     style: TextStyle(
                                                       fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                       color: Colors.grey
@@ -145,7 +146,7 @@ class _MapViewState extends State<MapView> {
                                          child: Container(
                                           constraints: BoxConstraints(maxHeight: 60, maxWidth: 300),
                                           child:  Image.network(
-                                            controller.storesList[index].image,
+                                            controller.storesList[index].image!,
                                             fit: BoxFit.cover,
                                           ),
                                          ),
@@ -205,7 +206,7 @@ class _MapViewState extends State<MapView> {
                             itemBuilder:(context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                controller.changeMapPosition(positionOfMap, controller.storesList[index].latitude, controller.storesList[index].longitude);
+                                controller.changeMapPosition(positionOfMap, controller.storesList[index].latitude!, controller.storesList[index].longitude!);
                                 },
                                 child: Container(
                                   constraints: BoxConstraints(maxWidth: 350, minWidth: 300),
@@ -238,7 +239,7 @@ class _MapViewState extends State<MapView> {
                                                     fontWeight: FontWeight.w500)
                                                   ),
                                                   Text(
-                                                    controller.storesList[index].address,
+                                                    controller.storesList[index].address!,
                                                     style: TextStyle(
                                                       fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                       color: Colors.black,
@@ -251,7 +252,7 @@ class _MapViewState extends State<MapView> {
                                                 child: Row(
                                                   children: [
                                                     Text(
-                                                      controller.storesList[index].hours,
+                                                      controller.storesList[index].hours!,
                                                       style: TextStyle(
                                                         fontSize: Theme.of(context).textTheme.labelLarge!.fontSize,
                                                         color: Colors.grey
@@ -268,7 +269,7 @@ class _MapViewState extends State<MapView> {
                                            child: Container(
                                             constraints: BoxConstraints(maxHeight: 60, maxWidth: 300),
                                             child:  Image.network(
-                                              controller.storesList[index].image,
+                                              controller.storesList[index].image!,
                                               fit: BoxFit.cover,
                                             ),
                                            ),
@@ -291,19 +292,7 @@ class _MapViewState extends State<MapView> {
               
             );
           }
-        })) : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
-                ),
-              )
-            ],
-          )
+        })) : LoadingIndicator()
         ));
   }
 }

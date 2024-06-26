@@ -1,4 +1,5 @@
 import 'package:cafe_app/presentation/common/AppBarCoffee.dart';
+import 'package:cafe_app/presentation/common/LoadingIndicator.dart';
 import 'package:cafe_app/presentation/order-detail/OrderDetailController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,12 @@ class OrderDetail extends StatefulWidget {
 }
 
 class _OrderDetailState extends State<OrderDetail> {
+  @override
+  void initState() {
+    controller.onLoading();
+    super.initState();
+  }
+
   OrderDetailController controller = Get.put(OrderDetailController());
   final scrollContoller = ScrollController();
 
@@ -29,9 +36,9 @@ class _OrderDetailState extends State<OrderDetail> {
 
     return Scaffold(
       appBar: AppBarCoffee(title: "Order detail"),
-      body: Expanded(
-          child: SingleChildScrollView(
-            controller: scrollContoller,
+      body: Obx(() => controller.loaded.value ? 
+          SingleChildScrollView(
+              controller: scrollContoller,
               physics: ScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -86,29 +93,31 @@ class _OrderDetailState extends State<OrderDetail> {
                         style: style,
                       ),
                     ),
-                    DropdownButtonFormField(
-                      hint: Text("Select store for pick up..."),
-                      items: controller.stores
-                          .map((e) => DropdownMenuItem(
-                              value: e.values.first,
-                              child: Text(e.values.last)))
-                          .toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          controller.selectedLocal.value = value!;
-                        });
-                      },
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          filled: true,
-                          fillColor:
-                              Theme.of(context).primaryColor.withAlpha(10),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(25)),
-                              borderSide: BorderSide.none)),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
+                    controller.stores.isNotEmpty
+                        ? DropdownButtonFormField(
+                            hint: Text("Select store for pick up..."),
+                            items: controller.stores
+                                .map((e) => DropdownMenuItem(
+                                    value: e.id, child: Text(e.name)))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                controller.selectedLocal.value = value!;
+                              });
+                            },
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(10),
+                                filled: true,
+                                fillColor: Theme.of(context)
+                                    .primaryColor
+                                    .withAlpha(10),
+                                border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(25)),
+                                    borderSide: BorderSide.none)),
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                          )
+                        : Container(),
                     Padding(
                       padding: paddingSubtitles,
                       child: Row(
@@ -118,23 +127,23 @@ class _OrderDetailState extends State<OrderDetail> {
                             "Payment methods",
                             style: style,
                           ),
-                           GestureDetector(
-                            onTap: (){
-                              context.push("/selectPayment");
-                            },
-                            child : Text(
-                            "Select payment method",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ))
+                          GestureDetector(
+                              onTap: () {
+                                context.push("/selectPayment");
+                              },
+                              child: Text(
+                                "Select payment method",
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w500),
+                              ))
                         ],
                       ),
                     )
                   ],
                 ),
-              ))),
+              )) : LoadingIndicator()
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
         child: Column(

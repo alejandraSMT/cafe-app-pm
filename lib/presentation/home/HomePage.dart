@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cafe_app/models/Product.dart';
 import 'package:cafe_app/presentation/cart/ShoppingCartController.dart';
+import 'package:cafe_app/presentation/common/LoadingIndicator.dart';
 import 'package:cafe_app/presentation/home/HomePageController.dart';
 import 'package:cafe_app/presentation/profile/ProfileController.dart';
 // ignore: unnecessary_import
@@ -122,19 +123,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           )
-        : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
-                ),
-              )
-            ],
-          ));
+        : LoadingIndicator());
   }
 }
 

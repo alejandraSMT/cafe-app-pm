@@ -24,7 +24,6 @@ class DetailProductController extends GetxController{
   Future<void> onLoading(String productId) async{
     sizes.clear();
     await setSizes();
-    print("LARGO DE LA LIST DE TAMAÑOS: ${sizes.length}");
     await getProductDetail(productId);
   }
 

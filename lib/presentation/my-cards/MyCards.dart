@@ -1,4 +1,5 @@
 import 'package:cafe_app/presentation/common/AppBarCoffee.dart';
+import 'package:cafe_app/presentation/common/LoadingIndicator.dart';
 import 'package:cafe_app/presentation/my-cards/MyCardsController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,19 +45,7 @@ class _MyCardsState extends State<MyCards> {
                     )
                   ],
                 )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    )
-                  ],
-                ))),
+              : LoadingIndicator())),
     );
   }
 }

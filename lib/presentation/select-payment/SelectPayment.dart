@@ -1,4 +1,5 @@
 import 'package:cafe_app/presentation/common/AppBarCoffee.dart';
+import 'package:cafe_app/presentation/common/LoadingIndicator.dart';
 import 'package:cafe_app/presentation/order-detail/OrderDetailController.dart';
 import 'package:cafe_app/presentation/select-payment/SelectPaymentController.dart';
 import 'package:flutter/cupertino.dart';
@@ -153,19 +154,7 @@ class _SelectPaymentState extends State<SelectPayment> {
                         ],
                       ),
                     )))
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  )
-                ],
-              )),
+            : LoadingIndicator()),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(bottom: 8.0, left: 20, right: 20),
           child: ElevatedButton(

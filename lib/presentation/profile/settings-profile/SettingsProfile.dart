@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 // ignore: unnecessary_import
 import 'package:cafe_app/presentation/common/AppBarCoffee.dart';
+import 'package:cafe_app/presentation/common/LoadingIndicator.dart';
 import 'package:cafe_app/presentation/profile/ProfileController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -298,18 +299,6 @@ class _SettingsProfileState extends State<SettingsProfile> {
                   ],
                 ),
               ))
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  )
-                ],
-              )));
+            : LoadingIndicator()));
   }
 }

@@ -4,6 +4,7 @@ import 'dart:ffi';
 // ignore: unnecessary_import
 import 'package:cafe_app/models/Product.dart';
 import 'package:cafe_app/models/SizeCup.dart';
+import 'package:cafe_app/presentation/common/LoadingIndicator.dart';
 import 'package:cafe_app/presentation/detail_product/DetailProductController.dart';
 import 'package:cafe_app/presentation/home/HomePageController.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,8 +34,6 @@ class _DetailProductState extends State<DetailProduct> {
   @override
   void initState() {
     detailController.onLoading(widget.index);
-    print("TAMAÑO 1: ${detailController.sizes[2].size}");
-    print("LISTA: ${detailController.sizes.toList().toString()}");
     super.initState();
   }
 
@@ -180,19 +179,7 @@ class _DetailProductState extends State<DetailProduct> {
               _onBackButton(),
             ]),
           )
-        : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
-                ),
-              )
-            ],
-          ));
+        : LoadingIndicator());
   }
 }
 

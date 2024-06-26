@@ -62,7 +62,7 @@ class MapController extends GetxController {
     for (var element in points){
       var marker = Marker(
         markerId: MarkerId(element.id.toString()),
-        position: LatLng(element.latitude,element.longitude),
+        position: LatLng(element.latitude!,element.longitude!),
         infoWindow: InfoWindow(
           title: element.name
         ),
