@@ -104,8 +104,8 @@ class _SelectPaymentState extends State<SelectPayment> {
                                               ),
                                               title: Text(
                                                 card.cardNumber
-                                                    .substring(10, 15),
-                                                style: TextStyle(
+                                                    //.substring(10, 15),
+                                                ,style: TextStyle(
                                                     fontSize: Theme.of(context)
                                                         .textTheme
                                                         .labelLarge!

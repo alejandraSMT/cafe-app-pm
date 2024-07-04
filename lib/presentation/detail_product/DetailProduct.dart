@@ -302,7 +302,6 @@ class _buttons extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   controller.addProductToCart(product.productId!, controller.totalUnits.value, controller.sizeSelected.value+1);
-                  //cartController.addToCart(product, controller.totalUnits.value,controller.totalPrice.value);
                   context.pop();
                 },
                 child: Padding(

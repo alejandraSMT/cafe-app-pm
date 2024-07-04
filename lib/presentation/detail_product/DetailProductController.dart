@@ -74,7 +74,6 @@ class DetailProductController extends GetxController{
   Future<void> addProductToCart(int productId, int cant, int size) async{
     try{
       Map body = {
-        "userId": "6",
         "productoId": productId.toString(),
         "cantidad": cant.toString(),
         "tamaño": size.toString()
