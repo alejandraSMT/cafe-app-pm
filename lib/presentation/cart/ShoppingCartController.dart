@@ -17,7 +17,7 @@ class ShoppingCartController extends GetxController {
   var cartProducts = [].obs;
   RxInt cartId = 0.obs;
   RxInt totalItems = 0.obs;
-  RxString totalPrice = "".obs;
+  RxString totalPrice = "0".obs;
   RxBool loaded = false.obs;
   List<SizeCup> sizes = [];
 
@@ -63,6 +63,7 @@ class ShoppingCartController extends GetxController {
 
       if (response.statusCode != 200) {
         print("Error fetching cart data");
+        loaded.value = true;
         return;
       }
 

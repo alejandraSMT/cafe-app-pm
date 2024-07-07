@@ -1,16 +1,60 @@
+import 'dart:convert';
+
+import 'package:cafe_app/models/PastOrders.dart';
 import 'package:get/get.dart';
 import 'package:cafe_app/models/Order.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../globals.dart' as globals;
 
 class PastOrdersController extends GetxController {
-  var pastOrders = <Order>[].obs;
+  List<PastOrders> pastOrders = [];
+  RxBool loaded = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    loadPastOrders();
+  Future<void> onLoading() async {
+    pastOrders.clear();
+    await getPastOrders();
   }
 
-  void loadPastOrders() {
+  Future<void> getPastOrders() async{
+    try{
+
+      loaded.value = false;
+
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      var token = sharedPreferences.getString('token');
+
+      final response = await http.get(
+        Uri.parse("${globals.url_base}api/ordenRoutes/obtenerOrdenesPorUsuario"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        }
+      );
+
+      if(response.statusCode != 200){
+        print("Error getting past orders");
+        loaded.value = true;
+        return;
+      }
+
+      final body = json.decode(response.body).toList();
+      for (var e in body as List) {
+        pastOrders.add(PastOrders.fromJson(e));
+      }
+
+      print("body: $pastOrders");
+
+      loaded.value = true;
+
+    }catch(e){
+      loaded.value = true;
+      print("Error getting past orders: $e");
+    }
+  }
+
+  /*void loadPastOrders() {
     final data = [
       {
         "number": "1",
@@ -46,5 +90,5 @@ class PastOrdersController extends GetxController {
       },
     ];
     pastOrders.addAll(data.map<Order>((json) => Order.fromJson(json)).toList());
-  }
+  }*/
 }

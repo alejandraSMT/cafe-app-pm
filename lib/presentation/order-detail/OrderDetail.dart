@@ -63,9 +63,9 @@ class _OrderDetailState extends State<OrderDetail> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            titleAlignment: ListTileTitleAlignment.top,
+                            titleAlignment: ListTileTitleAlignment.center,
                             title: Text(
-                              "${controller.productsCart[index].cant!}x - ${controller.productsCart[index].name!}",
+                              "${controller.cartProducts[index].cant} x - ${controller.cartProducts[index].product!.name}",
                               style: TextStyle(
                                   fontSize: Theme.of(context)
                                       .textTheme
@@ -73,8 +73,11 @@ class _OrderDetailState extends State<OrderDetail> {
                                       .fontSize,
                                   fontWeight: FontWeight.w500),
                             ),
+                            subtitle: Text(
+                              controller.sizes.where((e) => e.id == controller.cartProducts[index].size!).first.size
+                            ),
                             trailing: Text(
-                                "s/ ${controller.productsCart[index].price!}",
+                                "s/ ${controller.cartProducts[index].totalPrice}",
                                 style: TextStyle(
                                     fontSize: Theme.of(context)
                                         .textTheme
@@ -83,7 +86,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                     fontWeight: FontWeight.normal)),
                           );
                         },
-                        itemCount: controller.productsCart.length,
+                        itemCount: controller.cartProducts.length,
                       ),
                     ),
                     Padding(
@@ -96,6 +99,7 @@ class _OrderDetailState extends State<OrderDetail> {
                     controller.stores.isNotEmpty
                         ? DropdownButtonFormField(
                             hint: Text("Select store for pick up..."),
+                            value: controller.selectedLocal.value != -1 ? controller.selectedLocal.value : null,
                             items: controller.stores
                                 .map((e) => DropdownMenuItem(
                                     value: e.id, child: Text(e.name)))
@@ -120,26 +124,68 @@ class _OrderDetailState extends State<OrderDetail> {
                         : Container(),
                     Padding(
                       padding: paddingSubtitles,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Payment methods",
-                            style: style,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Payment methods",
+                                style: style,
+                              ),
+                              GestureDetector(
+                                  onTap: () {
+                                    context.push("/selectPayment");
+                                  },
+                                  child: Text(
+                                    controller.paymentMethod.value == -1 ? 
+                                      "Select payment method" : "Change payment method"
+                                    ,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.w500),
+                                  )),
+                            ],
                           ),
-                          GestureDetector(
-                              onTap: () {
-                                context.push("/selectPayment");
-                              },
-                              child: Text(
-                                "Select payment method",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.w500),
-                              ))
+                          controller.paymentMethod.value != -1 ? 
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .primaryColor
+                                      .withAlpha(10),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(25))),
+                              child: ListTile(
+                                title: Text(
+                                  controller.paymentMethod.value == 1 ? "Card" : "Cash on",
+                                  style: style,
+                                ),
+                                trailing: Text(
+                                  controller.paymentMethod.value == 1 ? controller.cardInfo.value : "\$",
+                                  style: style,
+                                )
+                              )
+                            ),
+                          ) : Container()
                         ],
                       ),
-                    )
+                    ),
+                    Obx(() => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          controller.message.string,
+                          style: TextStyle(
+                            color: controller.messageColor.value
+                          ),
+                        ),
+                      ],
+                    ))
                   ],
                 ),
               )) : LoadingIndicator()
@@ -158,7 +204,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
-                Text("s/ 25.90")
+                Obx(() => Text("s/ ${controller.totalPrice.value}", style: const TextStyle(fontWeight: FontWeight.bold),))
               ],
             ),
             Padding(
@@ -168,7 +214,8 @@ class _OrderDetailState extends State<OrderDetail> {
                       backgroundColor: MaterialStatePropertyAll(
                           Theme.of(context).primaryColor)),
                   onPressed: () {
-                    context.goNamed("orderConfirmation");
+                    controller.placeOrder(context);
+                    //context.goNamed("orderConfirmation");
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

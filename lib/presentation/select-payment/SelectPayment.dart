@@ -22,6 +22,8 @@ class _SelectPaymentState extends State<SelectPayment> {
   final scrollContoller = ScrollController();
 
   SelectPaymentController controller = Get.put(SelectPaymentController());
+  OrderDetailController orderDetailController =
+      Get.put(OrderDetailController());
 
   @override
   void initState() {
@@ -77,8 +79,9 @@ class _SelectPaymentState extends State<SelectPayment> {
                                   padding: const EdgeInsets.only(top: 10.0),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Colors.black12),
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withAlpha(10),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(25))),
                                     child: ListView.separated(
@@ -104,8 +107,9 @@ class _SelectPaymentState extends State<SelectPayment> {
                                               ),
                                               title: Text(
                                                 card.cardNumber
-                                                    //.substring(10, 15),
-                                                ,style: TextStyle(
+                                                //.substring(10, 15),
+                                                ,
+                                                style: TextStyle(
                                                     fontSize: Theme.of(context)
                                                         .textTheme
                                                         .labelLarge!
@@ -114,7 +118,7 @@ class _SelectPaymentState extends State<SelectPayment> {
                                                         FontWeight.bold),
                                               ),
                                               trailing: card.id ==
-                                                      controller
+                                                      orderDetailController
                                                           .cardSelected.value
                                                   ? Icon(Icons.check)
                                                   : null,
@@ -146,10 +150,11 @@ class _SelectPaymentState extends State<SelectPayment> {
                                     leading: Image.asset(
                                         "assets/images/cash-on.png"),
                                     title: Text("Cash on", style: style),
-                                    trailing:
-                                        controller.paymentMethod.value == 0
-                                            ? Icon(Icons.check)
-                                            : null,
+                                    trailing: orderDetailController
+                                                .paymentMethod.value ==
+                                            0
+                                        ? Icon(Icons.check)
+                                        : null,
                                   )))
                         ],
                       ),

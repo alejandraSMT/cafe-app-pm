@@ -35,6 +35,7 @@ class HomePageController extends GetxController {
 
   Future<void> getCategories() async{
     try{
+      categories.clear();
       final response = await http.get(
         Uri.parse("${globals.url_base}api/categorias/obtenerCategoriasProducto")
       );
@@ -55,6 +56,7 @@ class HomePageController extends GetxController {
 
   Future<void> getAllProducts() async {
     try{
+      allProducts.clear();
       final response = await http.get(
         Uri.parse("${globals.url_base}api/productos/traerTodosLosProductos")
       );

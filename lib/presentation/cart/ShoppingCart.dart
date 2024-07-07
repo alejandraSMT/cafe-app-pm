@@ -91,7 +91,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                             ),
                             Spacer(),
                             Obx(() => Text(
-                                  "s/ ${controller.totalPrice}",
+                                  "s/ ${controller.totalPrice.value}",
                                   style: TextStyle(
                                       fontSize: Theme.of(context)
                                           .textTheme
@@ -105,12 +105,13 @@ class _ShoppingCartState extends State<ShoppingCart> {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: ElevatedButton(
                               style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      Theme.of(context).primaryColor)),
-                              onPressed: () {
+                                  backgroundColor: controller.cartProducts.value.isNotEmpty ? MaterialStatePropertyAll(
+                                      Theme.of(context).primaryColor) : const MaterialStatePropertyAll(
+                                      Colors.grey)),
+                              onPressed: controller.cartProducts.value.isNotEmpty ? () {
                                 controller.completeOrder();
                                 context.push("/orderDetail");
-                              },
+                              } : null,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
