@@ -73,7 +73,7 @@ class _PastOrdersState extends State<PastOrders> {
                                 ),
                                 SizedBox(height: 0),
                                 Text(
-                                  '${order.storeName}',
+                                  '${order.store!.name}',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text('S/.${order.totalPrice}')

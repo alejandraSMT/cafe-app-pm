@@ -20,7 +20,9 @@ class CartDetail{
     size = json['Tamaño'];
     cant = json['Cantidad'];
     totalPrice = double.parse(json['Precio'].toString());
-    product = Product.fromJson(json['producto']);
+    if(json['producto'] != null){
+      product = Product.fromJson(json['producto']);
+    }
   }
 
 

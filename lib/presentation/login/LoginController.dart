@@ -39,15 +39,6 @@ class LoginController extends GetxController{
         sendError(response.body.toString());
         throw Exception('Failed to login: ${response.body}');
       }
-      /*if(email=="123" && pass == "123"){
-        context.goNamed("main");
-      }else{
-        message.value = "User not found";
-        messageColor.value = Colors.red;
-      }
-      Future.delayed(Duration(seconds: 5), () {
-        message.value = '';
-      });*/
     }catch(e){
       print(e);
     }

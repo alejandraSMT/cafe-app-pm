@@ -124,6 +124,14 @@ class OrderDetailController extends GetxController{
   Future<void> placeOrder(BuildContext context) async{
     try{
 
+      
+
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      var token = sharedPreferences.getString('token');
+      var hasActiveOrder = sharedPreferences.getBool("hasActiveOrder");
+      
+
       Map body  = {
         "metodoDePago" : paymentMethod.value,
         "localId" : selectedLocal.value,
@@ -138,10 +146,10 @@ class OrderDetailController extends GetxController{
         return;
       }
 
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      var token = sharedPreferences.getString('token');
-
+      if(hasActiveOrder!){
+        sendError("You have an active order!");
+        return;
+      }
 
       final response = await http.post(
         Uri.parse("${globals.url_base}api/ordenRoutes/crearOrden"),

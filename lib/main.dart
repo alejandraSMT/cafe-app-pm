@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:cafe_app/MainController.dart';
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/presentation/active-order/ActiveOrder.dart';
 import 'package:cafe_app/presentation/add-card/AddCard.dart';
 import 'package:cafe_app/presentation/change-password/ChangePassword.dart';
 import 'package:cafe_app/presentation/my-cards/MyCards.dart';
@@ -130,6 +131,16 @@ final _router = GoRouter(
           builder: (context, state) => Scaffold(
             body: MyCards(),
           ),
+        ),
+        GoRoute(
+          name: 'activeOrder',
+          path: '/activeOrder/:id',
+          builder: (context, state) {
+            final orderId = state.pathParameters["id"];
+            return Scaffold(
+              body: ActiveOrder(orderId: orderId!),
+            );
+          }
         )
       ],
     );

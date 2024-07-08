@@ -43,86 +43,187 @@ class _HomePageState extends State<HomePage> {
     var style = theme.textTheme.headlineSmall!.copyWith(
         color: theme.colorScheme.primary, fontWeight: FontWeight.bold);
 
+    final scrollContoller = ScrollController();
     //var categories = ["Hot Coffee", "Iced Coffee", "Chocolate", "Signature"].toList();
 
     return Obx(() => controller.loaded.value
-        ? Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
+        ? SingleChildScrollView(
+            controller: scrollContoller,
+            physics: ScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        HomeHeader(
+                          style: style,
+                          cartController: cartController,
+                          controller: controller,
+                        ),
+                        Obx(() => controller.hasActiveOrder.value
+                            ? Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      context.push(
+                                          "/activeOrder/${controller.activeOrderId}");
+                                      print(
+                                          "CLICK A ORDEN: ${controller.activeOrderId}");
+                                    },
+                                    child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        constraints: BoxConstraints(
+                                            minWidth: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            minHeight: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                7),
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .primaryColor
+                                                .withAlpha(10),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(25))),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              height: 100,
+                                              width: 100,
+                                              child: Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  Container(
+                                                    height: 120,
+                                                    width: 120,
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xffECE1D0),
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    100))),
+                                                  ),
+                                                  Image.asset(
+                                                      'assets/images/coffee-pending-order.png',
+                                                      fit: BoxFit.contain)
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "Pending order",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize:
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .headlineSmall!
+                                                              .fontSize),
+                                                ),
+                                                Text(
+                                                  "Pick up your order",
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize:
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .labelLarge!
+                                                              .fontSize),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              )
+                            : Container()),
+                        const Text(
+                          "Categories",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 17),
+                        ),
+                        Padding(padding: EdgeInsets.symmetric(vertical: 5))
+                      ]),
+                  Container(
+                    constraints: BoxConstraints(maxHeight: 60),
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Obx(() => _tabCategory(
+                              categoryName: controller.categories[index].name!,
+                              selectedCategory:
+                                  controller.selectedCategory.value,
+                              categoryId: controller.categories[index].id!,
+                              onSelectedChange: () {
+                                setState(() {
+                                  controller.changeCategorySelected(
+                                      controller.categories[index].id!);
+                                  controller.setCategoryName(
+                                      controller.categories[index].name!);
+                                });
+                              }));
+                        },
+                        separatorBuilder: (context, index) => Divider(),
+                        itemCount: controller.categories.length),
+                  ),
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      HomeHeader(
-                        style: style,
-                        cartController: cartController,
-                        controller: controller,
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          controller.categoryName.value,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 17),
+                        ),
                       ),
-                      const Text(
-                        "Categories",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 17),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 5))
-                    ]),
-                Container(
-                  constraints: BoxConstraints(maxHeight: 60),
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Obx(() => _tabCategory(
-                            categoryName: controller.categories[index].name!,
-                            selectedCategory: controller.selectedCategory.value,
-                            categoryId: controller.categories[index].id!,
-                            onSelectedChange: () {
-                              setState(() {
-                                controller.changeCategorySelected(
-                                    controller.categories[index].id!);
-                                controller.setCategoryName(
-                                    controller.categories[index].name!);
-                              });
-                            }));
-                      },
-                      separatorBuilder: (context, index) => Divider(),
-                      itemCount: controller.categories.length),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        controller.categoryName.value,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 17),
-                      ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                    child: GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.70 / 1,
-                  children: List.generate(
-                      controller.filteredList.length,
-                      (index) => ProductCard(
-                            popular: controller.filteredList,
-                            index: index,
-                            product: controller.filteredList[index],
-                          )),
-                  shrinkWrap: true,
-                ))
-              ],
-            ),
-          )
+                    ],
+                  ),
+                  Flexible(
+                      child: GridView.count(
+                    controller: scrollContoller,
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.70 / 1,
+                    children: List.generate(
+                        controller.filteredList.length,
+                        (index) => ProductCard(
+                              popular: controller.filteredList,
+                              index: index,
+                              product: controller.filteredList[index],
+                            )),
+                    shrinkWrap: true,
+                  ))
+                ],
+              ),
+            ))
         : LoadingIndicator());
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cafe_app/models/PastOrders.dart';
+import 'package:cafe_app/models/OrderDetail.dart';
 import 'package:get/get.dart';
 import 'package:cafe_app/models/Order.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../globals.dart' as globals;
 
 class PastOrdersController extends GetxController {
-  List<PastOrders> pastOrders = [];
+  List<OrderDetail> pastOrders = [];
   RxBool loaded = false.obs;
 
   Future<void> onLoading() async {
@@ -41,7 +41,10 @@ class PastOrdersController extends GetxController {
 
       final body = json.decode(response.body).toList();
       for (var e in body as List) {
-        pastOrders.add(PastOrders.fromJson(e));
+        var past = OrderDetail.fromJson(e);
+        if(past.status == 1){
+          pastOrders.add(past);
+        }
       }
 
       print("body: $pastOrders");
