@@ -1,3 +1,4 @@
+import 'package:cafe_app/models/CardItem.dart';
 import 'package:cafe_app/models/CartDetail.dart';
 import 'package:cafe_app/models/Store.dart';
 
@@ -9,6 +10,8 @@ class OrderDetail{
   double? totalPrice;
   int? status;
   List<CartDetail>? details;
+  int? paymentMethod;
+  CardItem? cardInfo;
 
   OrderDetail({
     this.orderId,
@@ -16,7 +19,9 @@ class OrderDetail{
     this.store,
     this.totalPrice,
     this.status,
-    this.details
+    this.details,
+    this.paymentMethod,
+    this.cardInfo
   });
 
   OrderDetail.fromJson(Map<dynamic,dynamic> json){
@@ -29,6 +34,12 @@ class OrderDetail{
       (json['detallesorden'] as List).forEach((element) {
         details!.add(CartDetail.fromJson(element));
       });
+    if(json['MedioDePago'] != null){
+      paymentMethod = json['MedioDePago'];
+    }
+    if(json['tarjeta'] != null){
+      cardInfo = CardItem.fromJson(json['tarjeta']);
+    }
   }
 
 }

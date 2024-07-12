@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cafe_app/models/OrderDetail.dart';
+import 'package:cafe_app/presentation/home/HomePageController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +14,7 @@ class ActiveOrderController extends GetxController{
 
   RxBool loaded = false.obs;
   Rx<OrderDetail> orderDetail = OrderDetail().obs;
+  HomePageController homePageController = Get.put(HomePageController());
 
   Future<void> getActiveOrderInfo(String orderId) async{
     try{
@@ -28,8 +30,8 @@ class ActiveOrderController extends GetxController{
       }
       
       var body = OrderDetail.fromJson(jsonDecode(response.body));
+      print(response.body);
       orderDetail.value = body;
-      print("Order detail obtained: $orderDetail");
 
       loaded.value = true;
 
@@ -55,6 +57,7 @@ class ActiveOrderController extends GetxController{
       }
       
       sharedPreferences.setBool("hasActiveOrder", false);
+      await homePageController.getActiveOrder();
       context.pop();
 
     }catch(e){

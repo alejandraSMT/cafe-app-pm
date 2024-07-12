@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:ffi';
 
 import 'package:cafe_app/presentation/home/HomePageController.dart';
@@ -28,19 +29,20 @@ class LoginController extends GetxController{
           Uri.parse('${globals.url_base}api/usuario/iniciarSesion?emailAddress=${email}&contraseña=${pass}'),
           headers: {'Content-Type': 'application/json'});
 
-      if (response.statusCode == 200) {
-        print(jsonDecode(response.body));
-        saveToken(json.decode(response.body));
-        if(checkedBox.isTrue){
-          sp.setBool("isLogged", true);
-        }
-        context.goNamed("main");
-      } else {
+      if (response.statusCode != 200) {
         sendError(response.body.toString());
         throw Exception('Failed to login: ${response.body}');
       }
+
+      //log(jsonDecode(response.body));
+      saveToken(json.decode(response.body));
+      if(checkedBox.isTrue){
+        sp.setBool("isLogged", true);
+      }
+      context.goNamed("main");
+      resetValues();
     }catch(e){
-      print(e);
+      log(e.toString());
     }
 
   }
@@ -61,6 +63,11 @@ class LoginController extends GetxController{
   void saveToken(data) async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("token", data['token']);
+  }
+
+  void resetValues(){
+    emailController.text = "";
+    passController.text = "";
   }
 
 }

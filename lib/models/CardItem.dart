@@ -1,18 +1,18 @@
 class CardItem{
-  int id = -1;
-  String cardNumber = "";
-  String holderName = "";
+  int? id;
+  String? cardNumber;
+  String? holderName;
 
   CardItem({
-    required this.id,
-    required this.cardNumber,
-    required this.holderName
+    this.id,
+    this.cardNumber,
+    this.holderName
   });
 
   CardItem.fromJson(Map<dynamic, dynamic> json){
     id = json['id'];
-    cardNumber = json["numeroTarjeta"];
-    holderName = json['nombreTarjeta'];
+    cardNumber = json["NumeroTarjeta"];
+    holderName = json['NombreTarjeta'];
   }
 
 }

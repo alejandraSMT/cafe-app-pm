@@ -66,9 +66,9 @@ class _MyCardsState extends State<MyCards> {
                               itemBuilder: (context, index) {
                                 var card = controller.cardsList[index];
                                 return _cardItem(
-                                  cardNumber: card.cardNumber,
-                                  cardHolder: card.holderName,
-                                  cardId: card.id,
+                                  cardNumber: card.cardNumber!,
+                                  cardHolder: card.holderName!,
+                                  cardId: card.id!,
                                   controller: controller,
                                 );
                               },

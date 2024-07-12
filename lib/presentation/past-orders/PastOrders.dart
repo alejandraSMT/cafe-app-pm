@@ -46,9 +46,6 @@ class _PastOrdersState extends State<PastOrders> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(25))),
                       child: ListView.separated(
                         controller: scrollContoller,
                         shrinkWrap: true,

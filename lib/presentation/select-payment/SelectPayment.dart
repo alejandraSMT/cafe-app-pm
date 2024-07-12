@@ -91,12 +91,12 @@ class _SelectPaymentState extends State<SelectPayment> {
                                         var card = controller.cardsList[index];
                                         return Obx(() => ListTile(
                                               onTap: () {
-                                                controller.selectCard(card.id);
+                                                controller.selectCard(card.id!);
                                               },
                                               titleAlignment:
                                                   ListTileTitleAlignment.center,
                                               subtitle: Text(
-                                                card.holderName,
+                                                card.holderName!,
                                                 style: TextStyle(
                                                     fontSize: Theme.of(context)
                                                         .textTheme
@@ -106,7 +106,7 @@ class _SelectPaymentState extends State<SelectPayment> {
                                                         FontWeight.w500),
                                               ),
                                               title: Text(
-                                                card.cardNumber
+                                                card.cardNumber!
                                                 //.substring(10, 15),
                                                 ,
                                                 style: TextStyle(

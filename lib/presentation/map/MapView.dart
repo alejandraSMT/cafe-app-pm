@@ -144,7 +144,11 @@ class _MapViewState extends State<MapView> {
                                        Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                                        Expanded(
                                          child: Container(
-                                          constraints: BoxConstraints(maxHeight: 60, maxWidth: 300),
+                                          constraints: BoxConstraints(maxHeight: 60, minWidth: 300),
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(25))
+                                          ),
                                           child:  Image.network(
                                             controller.storesList[index].image!,
                                             fit: BoxFit.cover,

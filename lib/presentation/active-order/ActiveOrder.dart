@@ -177,13 +177,11 @@ class _ActiveOrderState extends State<ActiveOrder> {
                                             Radius.circular(25))),
                                     child: ListTile(
                                         title: Text(
-                                          //controller.paymentMethod.value == 1 ? "Card" : "Cash on",
-                                          "Cash",
+                                          controller.orderDetail.value.paymentMethod == 1 ? "Card" : "Cash on",
                                           style: style,
                                         ),
                                         trailing: Text(
-                                          "UWU",
-                                          //controller.paymentMethod.value == 1 ? controller.cardInfo.value : "\$",
+                                          controller.orderDetail.value.paymentMethod == 1 ? "*${controller.orderDetail.value.cardInfo!.cardNumber!.substring(12,16)}" : "\$",
                                           style: style,
                                         ))),
                               )

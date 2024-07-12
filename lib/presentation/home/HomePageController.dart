@@ -55,6 +55,7 @@ class HomePageController extends GetxController {
 
       if(response.statusCode != 200){
         sharedPreferences.setBool("hasActiveOrder", false);
+        hasActiveOrder.value = false;
         return;
       }
 

@@ -6,6 +6,7 @@ import 'package:cafe_app/models/Product.dart';
 import 'package:cafe_app/models/SizeCup.dart';
 import 'package:cafe_app/models/Store.dart';
 import 'package:cafe_app/presentation/cart/ShoppingCartController.dart';
+import 'package:cafe_app/presentation/home/HomePageController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
@@ -31,6 +32,8 @@ class OrderDetailController extends GetxController{
 
   RxString message = "".obs;
   var messageColor = Colors.green.obs;
+
+  HomePageController homePageController = Get.put(HomePageController());
 
   Future<void> onLoading() async{
     cartProducts.clear();
@@ -165,6 +168,7 @@ class OrderDetailController extends GetxController{
         print("Error creating order");
         return;
       }
+      await homePageController.getActiveOrder();
 
       context.push("/orderConfirmation");
       reset();

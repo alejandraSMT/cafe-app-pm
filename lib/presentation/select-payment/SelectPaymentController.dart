@@ -47,7 +47,7 @@ class SelectPaymentController extends GetxController{
 
   void selectCard(int idCard){
     orderDetailController.cardSelected.value = idCard;
-    orderDetailController.cardInfo.value = cardsList.where((e) => e.id == idCard).first.cardNumber;
+    orderDetailController.cardInfo.value = cardsList.where((e) => e.id == idCard).first.cardNumber!;
     orderDetailController.paymentMethod.value = 1;
   }
 

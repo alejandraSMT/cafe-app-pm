@@ -27,6 +27,13 @@ class ProfileController extends GetxController {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'
         });
+
+    if(response.statusCode != 200){
+      sharedPreferences.setBool("isLogged", false);
+      context.goNamed("login");
+      return;
+    }
+
     userData = User.fromJson(jsonDecode(response.body));
     lastname.text = userData.lastname;
     emailAddress.text = userData.email;
@@ -68,12 +75,12 @@ class ProfileController extends GetxController {
               'Authorization': 'Bearer $token'
             },
             body: jsonEncode(body));
-        if (response.statusCode == 200) {
-          editing.value = false;
-          getUserData(context);
-        }else{
+        if (response.statusCode != 200) {
           sendError("Error from server. Try again.");
+          return;
         }
+        editing.value = false;
+        getUserData(context);
     } catch (e) {
       print(e);
     }
