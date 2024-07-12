@@ -53,16 +53,18 @@ class _AddCardState extends State<AddCard> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CreditCardWidget(
-                cardBgColor: Colors.blue,
-                cardNumber: addCardController.cardNumber.value,
-                expiryDate: addCardController.expiryDate.value,
-                cardHolderName: addCardController.cardHolderName.value,
-                cvvCode: addCardController.cvvCode.value,
-                showBackView: false, //true when you want to show cvv(back) view
-                isHolderNameVisible: true,
-                onCreditCardWidgetChange: (CreditCardBrand
-                    brand) {}, // Callback for anytime credit card brand is changed
+              Obx(() => 
+                CreditCardWidget(
+                  cardBgColor: Colors.blue,
+                  cardNumber: addCardController.cardNumber.value,
+                  expiryDate: addCardController.expiryDate.value,
+                  cardHolderName: addCardController.cardHolderName.value,
+                  cvvCode: addCardController.cvvCode.value,
+                  showBackView: false, //true when you want to show cvv(back) view
+                  isHolderNameVisible: true,
+                  onCreditCardWidgetChange: (CreditCardBrand
+                      brand) {}, // Callback for anytime credit card brand is changed
+                )
               ),
               Expanded(
                   child: SingleChildScrollView(
