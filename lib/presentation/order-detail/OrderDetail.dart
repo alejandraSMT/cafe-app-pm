@@ -1,3 +1,5 @@
+import 'package:cafe_app/presentation/common/AppBarCoffee.dart';
+import 'package:cafe_app/presentation/common/LoadingIndicator.dart';
 import 'package:cafe_app/presentation/order-detail/OrderDetailController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,12 @@ class OrderDetail extends StatefulWidget {
 }
 
 class _OrderDetailState extends State<OrderDetail> {
+  @override
+  void initState() {
+    controller.onLoading();
+    super.initState();
+  }
+
   OrderDetailController controller = Get.put(OrderDetailController());
   final scrollContoller = ScrollController();
 
@@ -27,28 +35,10 @@ class _OrderDetailState extends State<OrderDetail> {
     var paddingSubtitles = EdgeInsets.symmetric(vertical: 10.0);
 
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            context.goNamed("shoppingCart");
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        title: Text(
-          "Order Detail",
-          style: TextStyle(
-              fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      body: Expanded(
-          child: SingleChildScrollView(
-            controller: scrollContoller,
+      appBar: AppBarCoffee(title: "Order detail"),
+      body: Obx(() => controller.loaded.value ? 
+          SingleChildScrollView(
+              controller: scrollContoller,
               physics: ScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -73,9 +63,9 @@ class _OrderDetailState extends State<OrderDetail> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            titleAlignment: ListTileTitleAlignment.top,
+                            titleAlignment: ListTileTitleAlignment.center,
                             title: Text(
-                              "${controller.productsCart[index].cant!}x - ${controller.productsCart[index].name!}",
+                              "${controller.cartProducts[index].cant} x - ${controller.cartProducts[index].product!.name}",
                               style: TextStyle(
                                   fontSize: Theme.of(context)
                                       .textTheme
@@ -83,8 +73,11 @@ class _OrderDetailState extends State<OrderDetail> {
                                       .fontSize,
                                   fontWeight: FontWeight.w500),
                             ),
+                            subtitle: Text(
+                              controller.sizes.where((e) => e.id == controller.cartProducts[index].size!).first.size
+                            ),
                             trailing: Text(
-                                "s/ ${controller.productsCart[index].price!}",
+                                "s/ ${controller.cartProducts[index].totalPrice}",
                                 style: TextStyle(
                                     fontSize: Theme.of(context)
                                         .textTheme
@@ -93,7 +86,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                     fontWeight: FontWeight.normal)),
                           );
                         },
-                        itemCount: controller.productsCart.length,
+                        itemCount: controller.cartProducts.length,
                       ),
                     ),
                     Padding(
@@ -103,55 +96,100 @@ class _OrderDetailState extends State<OrderDetail> {
                         style: style,
                       ),
                     ),
-                    DropdownButtonFormField(
-                      hint: Text("Select store for pick up..."),
-                      items: controller.stores
-                          .map((e) => DropdownMenuItem(
-                              value: e.values.first,
-                              child: Text(e.values.last)))
-                          .toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          controller.selectedLocal.value = value!;
-                        });
-                      },
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          filled: true,
-                          fillColor:
-                              Theme.of(context).primaryColor.withAlpha(10),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(25)),
-                              borderSide: BorderSide.none)),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
+                    controller.stores.isNotEmpty
+                        ? DropdownButtonFormField(
+                            hint: Text("Select store for pick up..."),
+                            value: controller.selectedLocal.value != -1 ? controller.selectedLocal.value : null,
+                            items: controller.stores
+                                .map((e) => DropdownMenuItem(
+                                    value: e.id, child: Text(e.name)))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                controller.selectedLocal.value = value!;
+                              });
+                            },
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(10),
+                                filled: true,
+                                fillColor: Theme.of(context)
+                                    .primaryColor
+                                    .withAlpha(10),
+                                border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(25)),
+                                    borderSide: BorderSide.none)),
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                          )
+                        : Container(),
                     Padding(
                       padding: paddingSubtitles,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Payment methods",
-                            style: style,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Payment methods",
+                                style: style,
+                              ),
+                              GestureDetector(
+                                  onTap: () {
+                                    context.push("/selectPayment");
+                                  },
+                                  child: Text(
+                                    controller.paymentMethod.value == -1 ? 
+                                      "Select payment method" : "Change payment method"
+                                    ,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.w500),
+                                  )),
+                            ],
                           ),
-                           GestureDetector(
-                            onTap: (){
-                              context.goNamed("selectPayment");
-                            },
-                            child : Text(
-                            "Select payment method",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w500
+                          controller.paymentMethod.value != -1 ? 
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .primaryColor
+                                      .withAlpha(10),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(25))),
+                              child: ListTile(
+                                title: Text(
+                                  controller.paymentMethod.value == 1 ? "Card" : "Cash on",
+                                  style: style,
+                                ),
+                                trailing: Text(
+                                  controller.paymentMethod.value == 1 ? controller.cardInfo.value : "\$",
+                                  style: style,
+                                )
+                              )
                             ),
-                          ))
+                          ) : Container()
                         ],
                       ),
-                    )
+                    ),
+                    Obx(() => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          controller.message.string,
+                          style: TextStyle(
+                            color: controller.messageColor.value
+                          ),
+                        ),
+                      ],
+                    ))
                   ],
                 ),
-              ))),
+              )) : LoadingIndicator()
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
         child: Column(
@@ -166,7 +204,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
-                Text("s/ 25.90")
+                Obx(() => Text("s/ ${controller.totalPrice.value}", style: const TextStyle(fontWeight: FontWeight.bold),))
               ],
             ),
             Padding(
@@ -176,7 +214,8 @@ class _OrderDetailState extends State<OrderDetail> {
                       backgroundColor: MaterialStatePropertyAll(
                           Theme.of(context).primaryColor)),
                   onPressed: () {
-                    context.goNamed("orderConfirmation");
+                    controller.placeOrder(context);
+                    //context.goNamed("orderConfirmation");
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -1,23 +1,104 @@
+import 'dart:convert';
+
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/models/SizeCup.dart';
 import 'package:cafe_app/presentation/home/HomePageController.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import '../../globals.dart' as globals;
 
 
 class DetailProductController extends GetxController{
   final HomePageController controller = Get.put(HomePageController());
 
-  Rx<Product> productSelected = Product(productId: "", name: "", price: "").obs;
+  RxBool loaded = false.obs;
+
+  Rx<Product> productSelected = Product().obs;
   RxDouble totalPrice = 0.0.obs;
   RxInt totalUnits = 1.obs;
   RxInt sizeSelected = 0.obs;
+  List<SizeCup> sizes = [];
 
-  void getProductDetail(String productId){
-    productSelected.value = controller.popular.where((element) => element.productId == productId).first;
-    totalPrice.value = double.parse(productSelected.value.price!);
-    totalUnits.value = 1;
-    sizeSelected.value = 0;
+  Future<void> onLoading(String productId) async{
+    sizes.clear();
+    await setSizes();
+    await getProductDetail(productId);
+  }
+
+  Future<void> setSizes() async{
+    const body = [
+      {
+        "id": 1,
+        "size": "Small"
+      },
+      {
+        "id": 2,
+        "size": "Medium"
+      },
+      {
+        "id": 3,
+        "size": "Large"
+      }
+    ];
+    sizes.addAll(body.map<SizeCup>(SizeCup.fromJson).toList());
+  }
+
+  Future<void> getProductDetail(String productId) async {
+    try{
+      loaded.value = false;
+
+      final response = await http.get(
+        Uri.parse("${globals.url_base}api/productos/traerproductoConIngredientes?id=$productId")
+      );
+
+      if(response.statusCode != 200){
+        return;
+      }
+
+      var body = Product.fromJson(json.decode(response.body)['producto']);
+      productSelected.value = body;
+
+
+      totalPrice.value = productSelected.value.price!;
+      totalUnits.value = 1;
+      sizeSelected.value = 0;
+
+      loaded.value = true;
+    }catch(e){
+      print(e);
+    }
+  }
+  
+  Future<void> addProductToCart(int productId, int cant, int size) async{
+    try{
+      Map body = {
+        "productoId": productId.toString(),
+        "cantidad": cant.toString(),
+        "tamaño": size.toString()
+      };
+
+      print("BODY: $body");
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      var token = sharedPreferences.getString('token');
+      final response = await http.post(
+        Uri.parse("${globals.url_base}api/carritoDetalle/agregarACarrito"),
+        headers: {
+          'Authorization': 'Bearer $token'},
+        body: body
+      );
+
+      if(response.statusCode != 201){
+        print("error!: ${response.body}");
+        return;
+      }
+
+      print(response.body);
+
+    }catch(e){
+      print("Error adding to cart: $e");
+    }
   }
 
   void addTotalAmount(){
@@ -34,7 +115,7 @@ class DetailProductController extends GetxController{
 
   void calculateTotal(){
     if(totalUnits.value > 0){
-      totalPrice.value = double.parse(productSelected.value.price!)*totalUnits.value;
+      totalPrice.value = (productSelected.value.price!*totalUnits.value);
     }
   }
 

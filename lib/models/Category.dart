@@ -1,14 +1,17 @@
 class Category{
-  final int id;
-  final String name;
+  int? id;
+  String? name;
+  String? description;
 
-  const Category({
-    required this.id,
-    required this.name
+  Category({
+    this.id,
+    this.name,
+    this.description
   });
 
   static Category fromJson(json) => Category(
     id: json['id'], 
-    name: json['name']
+    name: json['Nombre'],
+    description: json['Descripcion']
   );
 }

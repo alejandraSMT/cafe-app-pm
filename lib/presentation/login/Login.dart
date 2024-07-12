@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 // ignore: unnecessary_import
+import 'package:cafe_app/MainController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,12 +10,24 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:go_router/go_router.dart';
 import './LoginController.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   Login({
     super.key,
   });
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   LoginController controller = Get.put(LoginController());
+  MainController mainController = Get.put(MainController());
+
+  @override
+  void initState() {
+    mainController.getSPValue(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

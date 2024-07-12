@@ -2,8 +2,14 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cafe_app/MainController.dart';
 import 'package:cafe_app/models/Product.dart';
+import 'package:cafe_app/presentation/active-order/ActiveOrder.dart';
 import 'package:cafe_app/presentation/add-card/AddCard.dart';
+import 'package:cafe_app/presentation/change-password/ChangePassword.dart';
+import 'package:cafe_app/presentation/my-cards/MyCards.dart';
+import 'package:cafe_app/presentation/past-orders/PastOrders.dart';
+import 'package:cafe_app/presentation/profile/settings-profile/SettingsProfile.dart';
 import 'package:cafe_app/presentation/detail_product/DetailProduct.dart';
 import 'package:cafe_app/presentation/login/Login.dart';
 import 'package:cafe_app/presentation/cart/ShoppingCart.dart';
@@ -14,8 +20,10 @@ import 'package:cafe_app/presentation/order-confirmation/OrderConfirmation.dart'
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'presentation/home/HomePage.dart';
 import 'presentation/map/MapView.dart';
@@ -61,9 +69,12 @@ final _router = GoRouter(
         GoRoute(
           name: 'detailProduct',
           path: '/detailProduct/:id',
-          builder: (context, state) => Scaffold(
-            body: DetailProduct(index: state.pathParameters["id"]!,),
-          ),
+          builder: (context, state) {
+            final id = state.pathParameters["id"];
+            return Scaffold(
+              body: DetailProduct(index: id!),
+            );
+          },
         ),
         GoRoute(
           name: 'orderDetail',
@@ -92,13 +103,56 @@ final _router = GoRouter(
           builder: (context, state) => Scaffold(
             body: OrderConfirmation(),
           ),
+        ),
+        GoRoute(
+          name: 'settingsProfile',
+          path: '/settingsProfile',
+          builder: (context, state) => Scaffold(
+            body: SettingsProfile(),
+          ),
+        ),
+        GoRoute(
+          name: 'pastOrders',
+          path: '/pastOrders',
+          builder: (context, state) => Scaffold(
+            body: PastOrders(),
+          ),
+        ),
+        GoRoute(
+          name: 'changePassword',
+          path: '/changePassword',
+          builder: (context, state) => Scaffold(
+            body: ChangePassword(),
+          ),
+        ),
+        GoRoute(
+          name: 'myCards',
+          path: '/myCards',
+          builder: (context, state) => Scaffold(
+            body: MyCards(),
+          ),
+        ),
+        GoRoute(
+          name: 'activeOrder',
+          path: '/activeOrder/:id',
+          builder: (context, state) {
+            final orderId = state.pathParameters["id"];
+            return Scaffold(
+              body: ActiveOrder(orderId: orderId!),
+            );
+          }
         )
       ],
     );
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     final ThemeData appTheme = ThemeData(
